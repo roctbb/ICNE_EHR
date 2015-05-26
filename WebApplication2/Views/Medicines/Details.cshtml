@@ -1,0 +1,58 @@
+﻿@model WebApplication2.Models.Medicine
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medicine</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.synonims)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.synonims)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.testimony)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.testimony)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contraindications)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contraindications)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
