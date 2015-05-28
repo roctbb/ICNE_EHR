@@ -1,6 +1,4 @@
-﻿@model IEnumerable<WebApplication2.Models.Pacient>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -9,97 +7,34 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.doctor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.firstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.secondName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dateOfregistration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.sex)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.mother)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.father)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.adress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.weight)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.doctor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.firstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.secondName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateOfregistration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.sex)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.mother)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.father)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+<form class="form-horizontal">
+    <div class="input-group input-group-lg col-sm-10">
+        <label for="search" class="sr-only">Введите имя пациента</label>
+        <div class="col-sm-10">
+            <input type="text" placeholder="Введите имя пациента" name="name" class="col-sm-10 form-control" id="search" />
+        </div>
+        <input type='button' id="submit" value='Поиск' class="btn" />
+    </div>
 
-</table>
+</form>
+<div id="results"></div>
+<script type="text/javascript">
+        $(document).ready(function () {
+            //$('#submit').cha
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                var name = $('#search').val();
+                name = name.replace(new RegExp(" ", 'g'), "%20");
+                $('#results').load("/Pacients/SearchByName?name=" + name);
+            });
+            $('#search').keypress(function (event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                }
+                var name = $('#search').val();
+                name = name.replace(new RegExp(" ", 'g'), "%20");
+                $('#results').load("/Pacients/SearchByName?name=" + name);
+            });
+        });
+</script>

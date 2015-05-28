@@ -1,0 +1,22 @@
+﻿@model WebApplication2.Models.Diagnosis
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        </dd>
+        <hr>
+    </dl>
+</div>
+

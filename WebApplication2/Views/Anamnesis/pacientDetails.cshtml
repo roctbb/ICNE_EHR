@@ -1,0 +1,18 @@
+﻿
+@model WebApplication2.Models.Anamnesis
+
+
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayFor(model => model.type.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments) @Html.ActionLink("Edit", "Edit", "Anamnesis", new { id = Model.ID }, null);
+        </dd>
+       
+    </dl>
+</div>
+

@@ -17,7 +17,7 @@ namespace WebApplication2.Controllers
         // GET: Diagnoses
         public ActionResult Index()
         {
-            return View(db.Diagnoses.ToList());
+            return View(db.diagnoses.ToList());
         }
 
         // GET: Diagnoses/Details/5
@@ -27,7 +27,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.Diagnoses.Find(id);
+            Diagnosis diagnosis = db.diagnoses.Find(id);
             if (diagnosis == null)
             {
                 return HttpNotFound();
@@ -46,11 +46,11 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,name,comments")] Diagnosis diagnosis)
+        public ActionResult Create([Bind(Include = "ID,comments")] Diagnosis diagnosis)
         {
             if (ModelState.IsValid)
             {
-                db.Diagnoses.Add(diagnosis);
+                db.diagnoses.Add(diagnosis);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.Diagnoses.Find(id);
+            Diagnosis diagnosis = db.diagnoses.Find(id);
             if (diagnosis == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,name,comments")] Diagnosis diagnosis)
+        public ActionResult Edit([Bind(Include = "ID,comments")] Diagnosis diagnosis)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.Diagnoses.Find(id);
+            Diagnosis diagnosis = db.diagnoses.Find(id);
             if (diagnosis == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Diagnosis diagnosis = db.Diagnoses.Find(id);
-            db.Diagnoses.Remove(diagnosis);
+            Diagnosis diagnosis = db.diagnoses.Find(id);
+            db.diagnoses.Remove(diagnosis);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

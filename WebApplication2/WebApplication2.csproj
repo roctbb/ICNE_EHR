@@ -160,15 +160,32 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnamnesisController.cs" />
+    <Compile Include="Controllers\AnamnesisEventTypesController.cs" />
+    <Compile Include="Controllers\AssigmentsController.cs" />
+    <Compile Include="Controllers\AssigmentTypesController.cs" />
+    <Compile Include="Controllers\DebutsController.cs" />
+    <Compile Include="Controllers\DebutTypesController.cs" />
     <Compile Include="Controllers\DiagnosesController.cs" />
+    <Compile Include="Controllers\DiagnosisTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InspectionsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MedicinesController.cs" />
+    <Compile Include="Controllers\MedicineTypesController.cs" />
+    <Compile Include="Controllers\NeurostatusController.cs" />
+    <Compile Include="Controllers\NeuroStatusTypesController.cs" />
     <Compile Include="Controllers\PacientsController.cs" />
+    <Compile Include="Controllers\ResearchesController.cs" />
+    <Compile Include="Controllers\ResearchTypesController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\SyndromeTypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505272225548_InitialCreate.cs" />
+    <Compile Include="Migrations\201505272225548_InitialCreate.Designer.cs">
+      <DependentUpon>201505272225548_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -187,9 +204,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -213,7 +231,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -234,21 +251,94 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Diagnoses\Create.cshtml" />
-    <Content Include="Views\Diagnoses\Delete.cshtml" />
-    <Content Include="Views\Diagnoses\Details.cshtml" />
-    <Content Include="Views\Diagnoses\Edit.cshtml" />
-    <Content Include="Views\Diagnoses\Index.cshtml" />
-    <Content Include="Views\Medicines\Create.cshtml" />
-    <Content Include="Views\Medicines\Delete.cshtml" />
-    <Content Include="Views\Medicines\Details.cshtml" />
-    <Content Include="Views\Medicines\Edit.cshtml" />
-    <Content Include="Views\Medicines\Index.cshtml" />
     <Content Include="Views\Pacients\Create.cshtml" />
     <Content Include="Views\Pacients\Delete.cshtml" />
     <Content Include="Views\Pacients\Details.cshtml" />
     <Content Include="Views\Pacients\Edit.cshtml" />
     <Content Include="Views\Pacients\Index.cshtml" />
+    <Content Include="Views\Pacients\SearchByName.cshtml" />
+    <Content Include="Views\AnamnesisEventTypes\Create.cshtml" />
+    <Content Include="Views\AnamnesisEventTypes\Delete.cshtml" />
+    <Content Include="Views\AnamnesisEventTypes\Details.cshtml" />
+    <Content Include="Views\AnamnesisEventTypes\Edit.cshtml" />
+    <Content Include="Views\AnamnesisEventTypes\Index.cshtml" />
+    <Content Include="Views\AssigmentTypes\Create.cshtml" />
+    <Content Include="Views\AssigmentTypes\Delete.cshtml" />
+    <Content Include="Views\AssigmentTypes\Details.cshtml" />
+    <Content Include="Views\AssigmentTypes\Edit.cshtml" />
+    <Content Include="Views\AssigmentTypes\Index.cshtml" />
+    <Content Include="Views\DebutTypes\Create.cshtml" />
+    <Content Include="Views\DebutTypes\Delete.cshtml" />
+    <Content Include="Views\DebutTypes\Details.cshtml" />
+    <Content Include="Views\DebutTypes\Edit.cshtml" />
+    <Content Include="Views\DebutTypes\Index.cshtml" />
+    <Content Include="Views\DiagnosisTypes\Create.cshtml" />
+    <Content Include="Views\DiagnosisTypes\Delete.cshtml" />
+    <Content Include="Views\DiagnosisTypes\Details.cshtml" />
+    <Content Include="Views\DiagnosisTypes\Edit.cshtml" />
+    <Content Include="Views\DiagnosisTypes\Index.cshtml" />
+    <Content Include="Views\MedicineTypes\Create.cshtml" />
+    <Content Include="Views\MedicineTypes\Delete.cshtml" />
+    <Content Include="Views\MedicineTypes\Details.cshtml" />
+    <Content Include="Views\MedicineTypes\Edit.cshtml" />
+    <Content Include="Views\MedicineTypes\Index.cshtml" />
+    <Content Include="Views\NeuroStatusTypes\Create.cshtml" />
+    <Content Include="Views\NeuroStatusTypes\Delete.cshtml" />
+    <Content Include="Views\NeuroStatusTypes\Details.cshtml" />
+    <Content Include="Views\NeuroStatusTypes\Edit.cshtml" />
+    <Content Include="Views\NeuroStatusTypes\Index.cshtml" />
+    <Content Include="Views\ResearchTypes\Create.cshtml" />
+    <Content Include="Views\ResearchTypes\Delete.cshtml" />
+    <Content Include="Views\ResearchTypes\Details.cshtml" />
+    <Content Include="Views\ResearchTypes\Edit.cshtml" />
+    <Content Include="Views\ResearchTypes\Index.cshtml" />
+    <Content Include="Views\SyndromeTypes\Create.cshtml" />
+    <Content Include="Views\SyndromeTypes\Delete.cshtml" />
+    <Content Include="Views\SyndromeTypes\Details.cshtml" />
+    <Content Include="Views\SyndromeTypes\Edit.cshtml" />
+    <Content Include="Views\SyndromeTypes\Index.cshtml" />
+    <Content Include="Views\Anamnesis\Create.cshtml" />
+    <Content Include="Views\Anamnesis\Delete.cshtml" />
+    <Content Include="Views\Anamnesis\Details.cshtml" />
+    <Content Include="Views\Anamnesis\Edit.cshtml" />
+    <Content Include="Views\Anamnesis\Index.cshtml" />
+    <Content Include="Views\Anamnesis\pacientDetails.cshtml" />
+    <Content Include="Views\Debuts\Create.cshtml" />
+    <Content Include="Views\Debuts\Delete.cshtml" />
+    <Content Include="Views\Debuts\Details.cshtml" />
+    <Content Include="Views\Debuts\Edit.cshtml" />
+    <Content Include="Views\Debuts\Index.cshtml" />
+    <Content Include="Views\Debuts\pacientDetails.cshtml" />
+    <Content Include="Views\Diagnoses\Create.cshtml" />
+    <Content Include="Views\Diagnoses\Delete.cshtml" />
+    <Content Include="Views\Diagnoses\Details.cshtml" />
+    <Content Include="Views\Diagnoses\Edit.cshtml" />
+    <Content Include="Views\Diagnoses\Index.cshtml" />
+    <Content Include="Views\Diagnoses\pacientDetails.cshtml" />
+    <Content Include="Views\Researches\Create.cshtml" />
+    <Content Include="Views\Researches\Delete.cshtml" />
+    <Content Include="Views\Researches\Details.cshtml" />
+    <Content Include="Views\Researches\Edit.cshtml" />
+    <Content Include="Views\Researches\Index.cshtml" />
+    <Content Include="Views\Researches\pacientDetails.cshtml" />
+    <Content Include="Views\Assigments\Create.cshtml" />
+    <Content Include="Views\Assigments\Delete.cshtml" />
+    <Content Include="Views\Assigments\Details.cshtml" />
+    <Content Include="Views\Assigments\Edit.cshtml" />
+    <Content Include="Views\Assigments\Index.cshtml" />
+    <Content Include="Views\Assigments\pacientDetails.cshtml" />
+    <Content Include="Views\Neurostatus\Create.cshtml" />
+    <Content Include="Views\Neurostatus\Delete.cshtml" />
+    <Content Include="Views\Neurostatus\Details.cshtml" />
+    <Content Include="Views\Neurostatus\Edit.cshtml" />
+    <Content Include="Views\Neurostatus\Index.cshtml" />
+    <Content Include="Views\Neurostatus\pacientDetails.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Reviews\pacientDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,6 +349,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201505272225548_InitialCreate.resx">
+      <DependentUpon>201505272225548_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

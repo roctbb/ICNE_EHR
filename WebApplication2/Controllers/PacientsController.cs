@@ -17,9 +17,12 @@ namespace WebApplication2.Controllers
         // GET: Pacients
         public ActionResult Index()
         {
-            return View(db.Pacients.ToList());
+            return View();
         }
-
+        public ActionResult SearchByName(String name = "")
+        {
+            return PartialView(db.Pacients.Where(p => p.name.Contains(name)).ToList());
+        }
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {
@@ -27,11 +30,18 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pacient pacient = db.Pacients.Find(id);
-            if (pacient == null)
-            {
-                return HttpNotFound();
-            }
+            // db.
+            Pacient pacient = db.Pacients
+                 .Include(p => p.visits.Select(w => w.anamnesis.Select(r=>r.type)))
+                 .Include(p => p.visits.Select(w => w.debutes.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.diagnoses.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.researches.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.anamnesis.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.neurostatuses.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.assigments.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.reviews))
+                 .Where(p=>p.ID == id).Single();
+            pacient.visits.Sort(delegate (VisitDate t1, VisitDate t2) { return t2.date.CompareTo(t1.date); });
             return View(pacient);
         }
 
@@ -46,7 +56,7 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,doctor,firstName,lastName,secondName,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight")] Pacient pacient)
+        public ActionResult Create([Bind(Include = "ID,doctor,name,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight,comments")] Pacient pacient)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +88,7 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,doctor,firstName,lastName,secondName,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight")] Pacient pacient)
+        public ActionResult Edit([Bind(Include = "ID,doctor,name,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight,comments")] Pacient pacient)
         {
             if (ModelState.IsValid)
             {

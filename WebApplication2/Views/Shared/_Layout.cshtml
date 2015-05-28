@@ -7,7 +7,10 @@
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -34,16 +37,18 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li >@Html.ActionLink("Пациенты", "Index", "Pacients")</li>
-                    <li >@Html.ActionLink("Добавить пациента", "Create", "Pacients")</li>
+                    <li>@Html.ActionLink("Пациенты", "Index", "Pacients")</li>
+                    <li>@Html.ActionLink("Добавить пациента", "Create", "Pacients")</li>
                 </ul>
                 <ul class="nav nav-sidebar">
-                    <li class="">@Html.ActionLink("Диагнозы", "Index", "Pacients")</li>
-                    <li class="">@Html.ActionLink("Список диагнозов", "Create", "Pacients")</li>
-                </ul>
-                <ul class="nav nav-sidebar">
-                    <li class="">@Html.ActionLink("Пациенты", "Index", "Diagnoses")</li>
-                    <li class="">@Html.ActionLink("Список пациентов", "Create", "Diagnoses")</li>
+                    <li class="">@Html.ActionLink("Поля анамнеза", "Index", "AnamnesisEventTypes")</li>
+                    <li class="">@Html.ActionLink("Типы лечения", "Index", "AssigmentTypes")</li>
+                    <li class="">@Html.ActionLink("Поля дебюта", "Index", "DebutTypes")</li>
+                    <li class="">@Html.ActionLink("Типы диагнозов", "Index", "DiagnosisTypes")</li>
+                    <li class="">@Html.ActionLink("Типы лекарств", "Index", "MedicineTypes")</li>
+                    <li class="">@Html.ActionLink("Типы невростатусов", "Index", "NeuroStatusTypes")</li>
+                    <li class="">@Html.ActionLink("Виды исследований", "Index", "ResearchTypes")</li>
+                    <li class="">@Html.ActionLink("Виды приступов", "Index", "SyndromeTypes")</li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -57,10 +62,10 @@
                     </footer>
                 </div>-->
                 @RenderBody()
-                </div>
+            </div>
+            </div>
+        </div>
 
-                @Scripts.Render("~/bundles/jquery")
-                @Scripts.Render("~/bundles/bootstrap")
-                @RenderSection("scripts", required: false)
+
 </body>
 </html>

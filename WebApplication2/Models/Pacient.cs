@@ -8,32 +8,40 @@ using System.Web;
 
 namespace WebApplication2.Models
 {
-    public class Inspection
-    {
-        public int ID { get; set; }
-        public DateTime date { get; set; }
-        public int doctorId { get; set; }
-        public String report { get; set; }
-    }
-    public class Monitoring
-    {
-        public int ID { get; set; }
-        public DateTime date { get; set; }
-        public int doctorId { get; set; }
-        public String report { get; set; }
-        public String type { get; set; }
-    }
-    public class Diagnosis
+    //Meta models
+    public class AnamnesisEventType
     {
         public int ID { get; set; }
         public String name { get; set; }
-        public String comments { get; set; }
-        public List<Pacient> pacients { get; set; }
-
-        public Diagnosis()
-        {
-            pacients = new List<Pacient>();
-        }
+    }
+    public class  DebutType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+    }
+    public class DiagnosisType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String description { get; set; }
+    }
+    public class ResearchType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String description { get; set; }
+    }
+    public class MedicineType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String description { get; set; }
+    }
+    public class NeuroStatusType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String description { get; set; }
     }
     public class Medicine
     {
@@ -43,34 +51,109 @@ namespace WebApplication2.Models
         public String synonims { get; set; }
         public String testimony { get; set; }
         public String contraindications { get; set; }
-        public List<Medicine> incompatibility { get; set; }
-        public List<Diagnosis> diasises { get; set; }
-        public Medicine() {
-            incompatibility = new List<Medicine>();
-            diasises = new List<Diagnosis>();
-        }
+        public MedicineType type { get; set; }
+
     }
-    public class Appointment
-    {
-        public int ID { get; set; }
-        public Medicine medicine { get; set; }
-        public Decimal dose { get; set; }
-        public String comments { get; set; }
-    }
-    public class Treatment
+    public class SyndromeType
     {
         public int ID { get; set; }
         public String name { get; set; }
         public String description { get; set; }
-        public String results { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public List<Appointment> appoitments { get; set; }
-        public Treatment()
-        {
-            appoitments = new List<Appointment>();
-        }
     }
+    public class AssigmentType
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String description { get; set; }
+    }
+
+    public class VisitDate
+    {
+        public int ID { get; set; }
+        public int doctorID { get; set; }
+        public DateTime date { get; set; }
+        public List<Anamnesis> anamnesis { get; set; }
+        public List<Debut> debutes { get; set; }
+        public List<Diagnosis> diagnoses { get; set; }
+        public List<Research> researches { get; set; }
+        public List<Assigment> assigments { get; set; }
+        public List<Neurostatus> neurostatuses { get; set; }
+        public List<Review> reviews { get; set; }
+    }
+    public class Anamnesis
+    {
+        public int ID { get; set; }
+        public AnamnesisEventType type { get; set; }
+        public String comments { get; set; }
+
+    }
+    public class Debut
+    {
+        public int ID { get; set; }
+        public DebutType type { get; set; }
+        public String comments { get; set; }
+        public String description { get; set; }
+        public int? month { get; set; }
+        public int? year { get; set; }
+        public int? minutes { get; set; }
+        public int? seconds { get; set; }
+
+    }
+    public class Diagnosis
+    {
+        public int ID { get; set; }
+        public DiagnosisType type { get; set; }
+        public String comments { get; set; }
+
+    }
+    public class Research
+    {
+        public int ID { get; set; }
+        public ResearchType type { get; set; }
+        public String description { get; set; }
+        public String comments { get; set; }
+
+    }
+    public class Assigment
+    {
+        public int ID { get; set; }
+        public AssigmentType type { get; set; }
+        public decimal? weight { get; set; }
+        public decimal? dose { get; set; }
+        public decimal? inADay { get; set; }
+        public String comments { get; set; }
+        public String medicine { get; set; }
+
+
+    }
+    public class Neurostatus
+    {
+        public int ID { get; set; }
+        public NeuroStatusType type { get; set; }
+        public String description { get; set; }
+        public String comments { get; set; }
+
+    }
+    public class Review
+    {
+        public int ID { get; set; }
+        public String comments { get; set; }
+    }
+    public class Syndrome
+    {
+        public int ID { get; set; }
+        public SyndromeType type { get; set; }
+        public String symptomes { get; set; }
+        public String comments { get; set; }
+        public int? mounth { get; set; }
+        public int? year { get; set; }
+        public int? week { get; set; }
+        public int? day { get; set; }
+        public int? minutes { get; set; }
+        public int? seconds { get; set; }
+
+    }
+
     public enum Sex
     {
         [Display(Name = "Противоречивый")]
@@ -91,14 +174,8 @@ namespace WebApplication2.Models
         public int ID { get; set; }
         [DisplayName("Лечащий врач")]
         public int? doctor { get; set; }
-        [DisplayName("Имя")]
-        [Required]
-        public String firstName { get; set; }
-        [DisplayName("Фамилия")]
-        [Required]
-        public String lastName { get; set; }
-        [DisplayName("Отчество")]
-        public String secondName { get; set; }
+        [DisplayName("ФИО")]
+        public String name { get; set; }
         [DisplayName("Номер карты")]
         public String cart { get; set; }
         [DisplayName("Телефон")]
@@ -109,10 +186,10 @@ namespace WebApplication2.Models
         [DataType(DataType.Date)]
         public DateTime dateOfregistration { get; set; }
         [DisplayName("Пол")]
-        [Required]
+
         public Sex sex { get; set; }
         [DisplayName("Дата рождения")]
-        [Required]
+ 
         [DataType(DataType.Date)]
         public DateTime birthday { get; set; }
         [DisplayName("Мать")]
@@ -120,32 +197,38 @@ namespace WebApplication2.Models
         [DisplayName("Отец")]
         public String father { get; set; }
         [DisplayName("Адрес проживания")]
-        [Required]
+
         public String adress { get; set; }
-        public List<Inspection> inspections { get; set; }
-        public List<Monitoring> monitorings { get; set; }
-        public List<Diagnosis> diagnoses { get; set; }
-        public List<Treatment> historyOfTreatment { get; set; }
-        public Treatment currentTreatment { get; set; }
-        [DisplayName("Вес")]
-        public Decimal weight { get; set; }
+        [DisplayName("Коментарии")]
+        [DataType(DataType.MultilineText)]
+        public String comments { get; set; }
+        public List<VisitDate> visits { get; set; }
 
         public Pacient()
         {
-            inspections = new List<Inspection>();
-            monitorings = new List<Monitoring>();
-            diagnoses = new List<Diagnosis>();
-            historyOfTreatment = new List<Treatment>();
         }    
     }
     public class PacientDBContext : DbContext
     {
         public DbSet<Pacient> Pacients { get; set; }
-        public DbSet<Inspection> Inspections { get; set; }
-        public DbSet<Monitoring> Monitorings { get; set; }
-        public DbSet<Diagnosis> Diagnoses { get; set; }
-        public DbSet<Medicine> Medicines { get; set; }
-        public DbSet<Treatment> Treatments { get; set; }
-        public DbSet<Appointment> Appoitments { get; set; }
+        public DbSet<AnamnesisEventType> anamnesisTypes { get; set; }
+        public DbSet<Anamnesis> anamneses { get; set; }
+        public DbSet<Debut> debutes { get; set; }
+        public DbSet<DebutType> debuteTypes { get; set; }
+        public DbSet<Diagnosis> diagnoses { get; set; }
+        public DbSet<DiagnosisType> diagnosisTypes { get; set; }
+        public DbSet<Research> researches { get; set; }
+        public DbSet<ResearchType> researchTypes { get; set; }
+        public DbSet<Medicine> medicines { get; set; }
+        public DbSet<MedicineType> medicineTypes { get; set; }
+        public DbSet<Neurostatus> neurostatuses { get; set; }
+        public DbSet<NeuroStatusType> neuroStatusTypes { get; set; }
+        public DbSet<Assigment> assigments { get; set; }
+        public DbSet<AssigmentType> assigmentTypes { get; set; }
+        public DbSet<Syndrome> syndromes { get; set; }
+        public DbSet<SyndromeType> syndromeTypes { get; set; }
+        public DbSet<Review> reviews { get; set; }
+        public DbSet<VisitDate> visits { get; set; }
+
     }
 }
