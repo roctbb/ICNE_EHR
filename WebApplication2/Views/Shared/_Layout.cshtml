@@ -11,6 +11,7 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     @RenderSection("scripts", required: false)
+    <script src="@Url.Content("~/Scripts/tinymce/tiny_mce.js")" type="text/javascript"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,7 +36,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
+            <div class="col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li>@Html.ActionLink("Пациенты", "Index", "Pacients")</li>
                     <li>@Html.ActionLink("Добавить пациента", "Create", "Pacients")</li>
@@ -51,7 +52,7 @@
                     <li class="">@Html.ActionLink("Виды приступов", "Index", "SyndromeTypes")</li>
                 </ul>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-md-10 col-md-offset-2 main">
 
 
                 <!--<div class="container body-content">

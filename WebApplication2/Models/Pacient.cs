@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Web.Mvc;
 using System.Linq;
 using System.Web;
 
@@ -79,11 +80,13 @@ namespace WebApplication2.Models
         public List<Assigment> assigments { get; set; }
         public List<Neurostatus> neurostatuses { get; set; }
         public List<Review> reviews { get; set; }
+        public List<Syndrome> syndromes { get; set; }
     }
     public class Anamnesis
     {
         public int ID { get; set; }
         public AnamnesisEventType type { get; set; }
+        [DataType(DataType.MultilineText)]
         public String comments { get; set; }
 
     }
@@ -137,6 +140,9 @@ namespace WebApplication2.Models
     public class Review
     {
         public int ID { get; set; }
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [UIHint("tinymce_full")]
         public String comments { get; set; }
     }
     public class Syndrome
@@ -145,7 +151,7 @@ namespace WebApplication2.Models
         public SyndromeType type { get; set; }
         public String symptomes { get; set; }
         public String comments { get; set; }
-        public int? mounth { get; set; }
+        public int? month { get; set; }
         public int? year { get; set; }
         public int? week { get; set; }
         public int? day { get; set; }
@@ -200,7 +206,9 @@ namespace WebApplication2.Models
 
         public String adress { get; set; }
         [DisplayName("Коментарии")]
-        [DataType(DataType.MultilineText)]
+        [DataType(DataType.Html)]
+        [AllowHtml]
+        [UIHint("tinymce_full")]
         public String comments { get; set; }
         public List<VisitDate> visits { get; set; }
 

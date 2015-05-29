@@ -1,0 +1,101 @@
+﻿@model WebApplication2.Models.Syndrome
+
+<form id="@String.Format("SyndromesEdit{0}", Model.ID)">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.type.ID)
+    <div class="form-horizontal">
+        <h4>Syndrome</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.type.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.type.name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.symptomes)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.symptomes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.symptomes, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.comments)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.month)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.month, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.month, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.year)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.year, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.year, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.week)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.week, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.week, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.day)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.day, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.day, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.minutes)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.minutes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.minutes, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.seconds)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.seconds, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.seconds, "", new { @class = "text-danger" })
+            </dd>
+
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a onclick="PostEditForm('Syndromes', @Model.ID);" class="btn">Сохранить</a>
+            </div>
+        </div>
+        </div>
+    </form>
+        

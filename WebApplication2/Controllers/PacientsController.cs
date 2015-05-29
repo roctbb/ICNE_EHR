@@ -19,9 +19,16 @@ namespace WebApplication2.Controllers
         {
             return View();
         }
-        public ActionResult SearchByName(String name = "")
+        public ActionResult SearchByName(String name = "", String mode = "name")
         {
-            return PartialView(db.Pacients.Where(p => p.name.Contains(name)).ToList());
+            
+            if (mode.Equals("name"))
+                return PartialView(db.Pacients.Where(p => p.name.Contains(name)).ToList());
+            else
+            {
+                var results = db.Pacients.Where(p => p.visits.Any(vd => vd.reviews.Any(r => r.comments.ToLower().Contains(name.ToLower()))));
+                return PartialView(results.ToList());
+            }
         }
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
@@ -39,6 +46,7 @@ namespace WebApplication2.Controllers
                  .Include(p => p.visits.Select(w => w.anamnesis.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.neurostatuses.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.assigments.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.syndromes.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.reviews))
                  .Where(p=>p.ID == id).Single();
             pacient.visits.Sort(delegate (VisitDate t1, VisitDate t2) { return t2.date.CompareTo(t1.date); });

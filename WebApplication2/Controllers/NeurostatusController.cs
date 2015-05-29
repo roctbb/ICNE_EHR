@@ -21,18 +21,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Neurostatus/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Neurostatus neurostatus = db.neurostatuses.Find(id);
+            Neurostatus neurostatus = db.neurostatuses.Include(p => p.type).Where(p => p.ID == id).First();
             if (neurostatus == null)
             {
                 return HttpNotFound();
             }
-            return View(neurostatus);
+            return PartialView("~/views/Neurostatus/pacientDetails.cshtml", neurostatus);
         }
 
         // GET: Neurostatus/Create
@@ -59,18 +59,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Neurostatus/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Neurostatus neurostatus = db.neurostatuses.Find(id);
+            Neurostatus neurostatus = db.neurostatuses.Include(p => p.type).Where(p => p.ID == id).First();
             if (neurostatus == null)
             {
                 return HttpNotFound();
             }
-            return View(neurostatus);
+            return PartialView(neurostatus);
         }
 
         // POST: Neurostatus/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,description,comments")] Neurostatus neurostatus)
+        public ActionResult pacientEdit([Bind(Include = "ID,description,comments")] Neurostatus neurostatus)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(neurostatus).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(neurostatus.ID);
             }
-            return View(neurostatus);
+            return PartialView(neurostatus);
         }
 
         // GET: Neurostatus/Delete/5

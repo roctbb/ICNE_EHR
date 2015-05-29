@@ -1,0 +1,70 @@
+﻿
+@model WebApplication2.Models.Assigment
+
+<form id="@String.Format("AssigmentsEdit{0}", Model.ID)">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.type.ID)
+    <div class="form-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.type.name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.weight)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.weight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.weight, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.dose)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.dose, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dose, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.inADay)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.inADay, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.inADay, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.medicine)
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.medicine, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.medicine, "", new { @class = "text-danger" })
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.comments)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </dd>
+
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a onclick="PostEditForm('Assigments', @Model.ID);" class="btn">Сохранить</a>
+            </div>
+        </div>
+
+        </div>
+    </form>
+        <hr />

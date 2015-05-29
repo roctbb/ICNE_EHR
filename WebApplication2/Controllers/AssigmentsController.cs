@@ -21,18 +21,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Assigments/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assigment assigment = db.assigments.Find(id);
+            Assigment assigment = db.assigments.Include(p => p.type).Where(p => p.ID == id).First();
             if (assigment == null)
             {
                 return HttpNotFound();
             }
-            return View(assigment);
+            return PartialView("~/views/Assigments/pacientDetails.cshtml", assigment);
         }
 
         // GET: Assigments/Create
@@ -59,18 +59,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Assigments/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assigment assigment = db.assigments.Find(id);
+            Assigment assigment = db.assigments.Include(p => p.type).Where(p => p.ID == id).First();
             if (assigment == null)
             {
                 return HttpNotFound();
             }
-            return View(assigment);
+            return PartialView(assigment);
         }
 
         // POST: Assigments/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,weight,dose,inADay,comments,medicine")] Assigment assigment)
+        public ActionResult pacientEdit([Bind(Include = "ID,weight,dose,inADay,comments,medicine")] Assigment assigment)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(assigment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(assigment.ID);
             }
-            return View(assigment);
+            return PartialView(assigment);
         }
 
         // GET: Assigments/Delete/5

@@ -1,0 +1,80 @@
+﻿
+@model WebApplication2.Models.Syndrome
+
+<div id="@String.Format("SyndromesDiv{0}", Model.ID)">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.type.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.symptomes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.symptomes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.week)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.week)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.day)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.day)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.minutes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.minutes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.seconds)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.seconds)
+        </dd>
+
+    </dl>
+<button onclick="LoadEditForm('Syndromes', @Model.ID)">Редактировать</button>
+</div>
+

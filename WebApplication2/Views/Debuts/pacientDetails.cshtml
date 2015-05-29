@@ -1,6 +1,6 @@
 ﻿
 @model WebApplication2.Models.Debut
-    
+    <div id="@String.Format("DebutsDiv{0}", Model.ID)">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.type)
@@ -9,21 +9,7 @@
         <dd>
             @Html.DisplayFor(model => model.type.name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.comments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.comments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
+        
 
         <dt>
             @Html.DisplayNameFor(model => model.month)
@@ -56,7 +42,24 @@
         <dd>
             @Html.DisplayFor(model => model.seconds)
         </dd>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
-    </dl>
-    <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
+
+        
+        
+    </dl>
+        <button onclick="LoadEditForm('Debuts', @Model.ID)">Редактировать</button>
+    <hr />
+        </div>

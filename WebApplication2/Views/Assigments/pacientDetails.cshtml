@@ -1,7 +1,7 @@
 ﻿
 @model WebApplication2.Models.Assigment
 
-    <hr />
+    <div id="@String.Format("AssigmentsDiv{0}", Model.ID)">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.type)
@@ -34,13 +34,7 @@
             @Html.DisplayFor(model => model.inADay)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.comments)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.comments)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.medicine)
@@ -49,6 +43,15 @@
         <dd>
             @Html.DisplayFor(model => model.medicine)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
 
     </dl>
-
+    <button onclick="LoadEditForm('Assigments', @Model.ID)">Редактировать</button>
+    <hr />
+</div>

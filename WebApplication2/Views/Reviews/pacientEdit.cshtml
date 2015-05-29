@@ -1,0 +1,26 @@
+﻿@model WebApplication2.Models.Review
+<form id="@String.Format("ReviewsEdit{0}", Model.ID)">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a onclick="PostEditForm('Reviews', @Model.ID, true);" class="btn">Сохранить</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</form>

@@ -21,7 +21,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Reviews/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
@@ -32,7 +32,7 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return PartialView("~/views/Reviews/pacientDetails.cshtml", review);
         }
 
         // GET: Reviews/Create
@@ -59,7 +59,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Reviews/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
@@ -70,7 +70,7 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return PartialView(review);
         }
 
         // POST: Reviews/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,comments")] Review review)
+        public ActionResult pacientEdit([Bind(Include = "ID,comments")] Review review)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(review.ID);
             }
-            return View(review);
+            return PartialView(review);
         }
 
         // GET: Reviews/Delete/5

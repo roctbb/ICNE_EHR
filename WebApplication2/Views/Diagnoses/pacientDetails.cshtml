@@ -1,6 +1,6 @@
 ﻿@model WebApplication2.Models.Diagnosis
 
-<div>
+<div id="@String.Format("DiagnosesDiv{0}", Model.ID)">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.type)
@@ -12,11 +12,11 @@
         <dt>
             @Html.DisplayNameFor(model => model.comments)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.comments)@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+            @Html.DisplayFor(model => model.comments)
         </dd>
-        <hr>
+        
     </dl>
+    <button onclick="LoadEditForm('Diagnoses', @Model.ID)">Редактировать</button>
 </div>
-
+<hr />

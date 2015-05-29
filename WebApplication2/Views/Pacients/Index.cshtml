@@ -2,39 +2,58 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Поиск пациентов</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    <form class="form-horizontal">
+        <div class="input-group input-group-lg col-md-12 bs-callout bs-callout-primary">
+            <label for="search" class="sr-only">Введите имя пациента</label>
+            <div class="col-sm-10">
+                <input type="text" placeholder="Введите имя пациента" name="name" class="col-sm-10 form-control" id="search" />
+            </div>
+            <div class="col-sm-2">
+                <input type='button' id="submit" value='Поиск' class="btn" />
+             </div>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" name="searchOptions" id="searchByName" value="name" checked> По имени
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="searchOptions" id="reviewSearch" value="review"> По резюме
+                </label>
+            </div>
 
-<form class="form-horizontal">
-    <div class="input-group input-group-lg col-sm-10">
-        <label for="search" class="sr-only">Введите имя пациента</label>
-        <div class="col-sm-10">
-            <input type="text" placeholder="Введите имя пациента" name="name" class="col-sm-10 form-control" id="search" />
-        </div>
-        <input type='button' id="submit" value='Поиск' class="btn" />
-    </div>
+            </div>
 
-</form>
-<div id="results"></div>
-<script type="text/javascript">
+    </form>
+</div>
+    <div id="results"></div>
+    <script type="text/javascript">
         $(document).ready(function () {
             //$('#submit').cha
             $('#submit').click(function (e) {
                 e.preventDefault();
                 var name = $('#search').val();
+                var mode = "name";
+                if ($("#reviewSearch").prop("checked"))
+                {
+                    mode = "review"
+                }
                 name = name.replace(new RegExp(" ", 'g'), "%20");
-                $('#results').load("/Pacients/SearchByName?name=" + name);
+                $('#results').load("/Pacients/SearchByName?name=" + name + "&mode="+mode);
             });
             $('#search').keypress(function (event) {
+                if ($("#reviewSearch").prop("checked")) return;
                 if (event.which == 13) {
                     event.preventDefault();
                 }
                 var name = $('#search').val();
+                var mode = "name";
+                if ($("#reviewSearch").prop("checked")) {
+                    mode = "review"
+                }
                 name = name.replace(new RegExp(" ", 'g'), "%20");
-                $('#results').load("/Pacients/SearchByName?name=" + name);
+                $('#results').load("/Pacients/SearchByName?name=" + name + "&mode=" + mode);
             });
         });
-</script>
+    </script>

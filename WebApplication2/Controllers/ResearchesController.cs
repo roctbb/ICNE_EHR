@@ -21,18 +21,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Researches/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Research research = db.researches.Find(id);
+            Research research = db.researches.Include(p => p.type).Where(p => p.ID == id).First();
             if (research == null)
             {
                 return HttpNotFound();
             }
-            return View(research);
+            return PartialView("~/views/Researches/pacientDetails.cshtml", research);
         }
 
         // GET: Researches/Create
@@ -59,18 +59,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Researches/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Research research = db.researches.Find(id);
+            Research research = db.researches.Include(p => p.type).Where(p => p.ID == id).First();
             if (research == null)
             {
                 return HttpNotFound();
             }
-            return View(research);
+            return PartialView(research);
         }
 
         // POST: Researches/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,description,comments")] Research research)
+        public ActionResult pacientEdit([Bind(Include = "ID,description,comments")] Research research)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(research).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(research.ID);
             }
-            return View(research);
+            return PartialView(research);
         }
 
         // GET: Researches/Delete/5

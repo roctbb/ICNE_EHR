@@ -1,0 +1,27 @@
+﻿
+@model WebApplication2.Models.Anamnesis
+
+<form id="@String.Format("AnamnesisEdit{0}", Model.ID)">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.type.ID)
+    <div class="form-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayFor(model => model.type.name)
+            </dt>
+
+            <dd>
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </dd>
+
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a onclick="PostEditForm('Anamnesis', @Model.ID);" class="btn">Сохранить</a>
+            </div>
+        </div>
+    </div> 
+</form>

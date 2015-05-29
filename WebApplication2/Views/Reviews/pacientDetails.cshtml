@@ -1,7 +1,7 @@
 ﻿
 @model WebApplication2.Models.Review
 
-    
+  <div id="@String.Format("ReviewsDiv{0}", Model.ID)">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.comments)
@@ -10,5 +10,8 @@
         <dd>
             @Html.DisplayFor(model => model.comments)
         </dd>
-
-    </dl><hr />
+        
+    </dl>
+      <button onclick="LoadEditForm('Reviews', @Model.ID)">Редактировать</button>
+      <hr />
+</div>

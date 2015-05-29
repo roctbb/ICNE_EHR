@@ -21,18 +21,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Diagnoses/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.diagnoses.Find(id);
+            Diagnosis diagnosis = db.diagnoses.Include(p => p.type).Where(p => p.ID == id).First();
             if (diagnosis == null)
             {
                 return HttpNotFound();
             }
-            return View(diagnosis);
+            return PartialView("~/views/Diagnoses/pacientDetails.cshtml", diagnosis);
         }
 
         // GET: Diagnoses/Create
@@ -59,18 +59,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Diagnoses/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.diagnoses.Find(id);
+            Diagnosis diagnosis = db.diagnoses.Include(p => p.type).Where(p => p.ID == id).First();
             if (diagnosis == null)
             {
                 return HttpNotFound();
             }
-            return View(diagnosis);
+            return PartialView(diagnosis);
         }
 
         // POST: Diagnoses/Edit/5
@@ -78,15 +78,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,comments")] Diagnosis diagnosis)
+        public ActionResult pacientEdit([Bind(Include = "ID,comments")] Diagnosis diagnosis)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(diagnosis).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(diagnosis.ID);
             }
-            return View(diagnosis);
+            return PartialView(diagnosis);
         }
 
         // GET: Diagnoses/Delete/5

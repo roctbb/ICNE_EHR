@@ -21,18 +21,18 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Anamnesis/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Anamnesis anamnesis = db.anamneses.Find(id);
+            Anamnesis anamnesis = db.anamneses.Include(p => p.type).Where(p => p.ID == id).First();
             if (anamnesis == null)
             {
                 return HttpNotFound();
             }
-            return View(anamnesis);
+            return PartialView("~/views/Anamnesis/pacientDetails.cshtml", anamnesis);
         }
 
         // GET: Anamnesis/Create
@@ -59,18 +59,19 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Anamnesis/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Anamnesis anamnesis = db.anamneses.Find(id);
+            Anamnesis anamnesis = db.anamneses.Include(p=>p.type).Where(p=>p.ID == id).First();
+            
             if (anamnesis == null)
             {
                 return HttpNotFound();
             }
-            return View(anamnesis);
+            return PartialView(anamnesis);
         }
 
         // POST: Anamnesis/Edit/5
@@ -78,15 +79,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,comments")] Anamnesis anamnesis)
+        public ActionResult pacientEdit([Bind(Include = "ID,comments")] Anamnesis anamnesis)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(anamnesis).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return pacientDetails(anamnesis.ID);
             }
-            return View(anamnesis);
+            return PartialView(anamnesis);
         }
 
         // GET: Anamnesis/Delete/5

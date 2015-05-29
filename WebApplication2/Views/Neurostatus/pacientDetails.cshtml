@@ -1,6 +1,6 @@
 ﻿@model WebApplication2.Models.Neurostatus
 
-    
+    <div id="@String.Format("NeurostatusDiv{0}", Model.ID)">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.type)
@@ -26,6 +26,8 @@
         </dd>
 
     </dl>
-<hr>
+        <button onclick="LoadEditForm('Neurostatus', @Model.ID)">Редактировать</button>
+        </div>
+    <hr>
 
 
