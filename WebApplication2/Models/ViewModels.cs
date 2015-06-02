@@ -73,4 +73,5 @@ namespace WebApplication2.Models
         public List<NeuroStatusType> eventTypes { get; set; }
 
     }
+
 }

@@ -1,6 +1,6 @@
 ﻿@model WebApplication2.Models.Diagnosis
 
-<div id="@String.Format("DiagnosesDiv{0}", Model.ID)" class="row">
+<div class="@String.Format("DiagnosesDiv{0}", Model.ID)" class="row">
     <div class="col-md-4">
         <strong>
             @Html.DisplayFor(model => model.type.name)

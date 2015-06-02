@@ -5,23 +5,32 @@
 <script>
     function Delete(controller, id) {
         $('#' + controller + 'Div' + id).load('/' + controller + '/pacientDelete/' + id);
+        $('.' + controller + 'Div' + id).load('/' + controller + '/pacientDelete/' + id);
     }
-    function LoadEditForm( controller, id)
-    {
+    function LoadEditForm(controller, id) {
         $('#' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+        $('.' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
     }
     function PostEditForm(controller, id, mce) {
-        if (mce==true) tinyMCE.triggerSave();
+        if (mce == true) tinyMCE.triggerSave();
         $.ajax({
             type: "POST",
             url: '/' + controller + '/pacientEdit/' + id,
             data: $('#' + controller + 'Edit' + id).serialize(), // serializes the form's elements.
             success: function (data) {
-                res = $.parseHTML('<div>'+data+'</div>');
-                $('#' + controller + 'Div' + id).html($(res).find('#' + controller + 'Div' + id).html());
+                res = $.parseHTML('<div>' + data + '</div>');
+                if ($(res).find('.' + controller + 'Div' + id).html() != "")
+                {
+                    var content = $(res).find('.' + controller + 'Div' + id).html();
+                }
+                else {
+                    var content = $(res).find('#' + controller + 'Div' + id).html();
+                }
+                $('#' + controller + 'Div' + id).html(content);
+                $('.' + controller + 'Div' + id).html(content);
             }
         });
-        
+
     }
     function PostCreateForm(controller, num, mce) {
         if (mce == true) tinyMCE.triggerSave();
@@ -31,7 +40,7 @@
             data: $('#' + controller + 'Create').serialize(), // serializes the form's elements.
             success: function (data) {
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
-                $('#documentData'+ num).append($(res).find('div').first().html());
+                $('#documentData' + num).append($(res).find('div').first().html());
             }
         });
 
@@ -39,20 +48,63 @@
 
 </script>
 
-@if (Model.visits.First().date.Equals(DateTime.Today))
-{
-    @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList { num = 1, add = true, visit = Model.visits.First() });
-}
-@{
-    int num = 9;
-}
-@foreach (var visit in Model.visits)
-{
-    if (visit.date.Equals(DateTime.Today))
-    {
-        continue;
-    }
-    @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList {num = num, add=false, visit=visit });
-    num = num + 8;
+<div role="tabpanel">
+    <ul class="nav  nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Приемы</a></li>
+        <li role="presentation"><a href="#anamnesisTab" aria-controls="anamnesisTab" role="tab" data-toggle="tab">Анамнез</a></li>
+        <li role="presentation"><a href="#debutTab" aria-controls="debutTab" role="tab" data-toggle="tab">Дебют</a></li>
+        <li role="presentation"><a href="#diagnosisTab" aria-controls="diagnosisTab" role="tab" data-toggle="tab">Диагнозы</a></li>
+        <li role="presentation"><a href="#syndromTab" aria-controls="syndromTab" role="tab" data-toggle="tab">Приступы</a></li>
+        <li role="presentation"><a href="#researchTab" aria-controls="researchTab" role="tab" data-toggle="tab">Исследования</a></li>
+        <li role="presentation"><a href="#assigmentTab" aria-controls="assigmentTab" role="tab" data-toggle="tab">Назначения</a></li>
+        <li role="presentation"><a href="#neurostatusTab" aria-controls="neurostatusTab" role="tab" data-toggle="tab">Невростатус</a></li>
+        <li role="presentation"><a href="#reviewTab" aria-controls="reviewTab" role="tab" data-toggle="tab">Резюме</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active fade in" id="home">
+            @if (Model.visits.First().date.Equals(DateTime.Today))
+            {
+                @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList { num = 1, add = true, visit = Model.visits.First() });
+            }
+            @{
+                int num = 9;
+            }
+            @foreach (var visit in Model.visits)
+            {
+                if (visit.date.Equals(DateTime.Today))
+                {
+                    continue;
+                }
+                @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList { num = num, add = false, visit = visit });
+                num = num + 8;
 
-}
+            }
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="anamnesisTab">
+            @Html.Partial("~/Views/Pacients/anamnesisList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="debutTab">
+            @Html.Partial("~/Views/Pacients/debutList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="diagnosisTab">
+            @Html.Partial("~/Views/Pacients/diagnosisList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="syndromTab">
+            @Html.Partial("~/Views/Pacients/syndromList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="researchTab">
+            @Html.Partial("~/Views/Pacients/researchList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="assigmentTab">
+            @Html.Partial("~/Views/Pacients/assigmentList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="neurostatusTab">
+            @Html.Partial("~/Views/Pacients/neurostatusList.cshtml", Model);
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="reviewTab">
+            @Html.Partial("~/Views/Pacients/reviewList.cshtml", Model);
+        </div>
+    </div>
+</div>
+
+

@@ -115,8 +115,7 @@
 
         </dl>
     </div>
-@Html.Partial("~/Views/Pacients/visitsView.cshtml", Model);
-@Html.DisplayFor(model => model.comments)
+@Html.Partial("~/Views/Pacients/visitsView.cshtml", Model)
         <p>
             @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
             

@@ -1,0 +1,17 @@
+﻿
+@model WebApplication2.Models.Pacient
+@using WebApplication2.Models
+
+
+<div class="bs-callout bs-callout-success">
+    <h5>Диагнозы</h5>
+    <p>&nbsp;</p>
+
+    @foreach (var visit in Model.visits)
+    {
+        foreach (var anamnes in visit.diagnoses)
+        {
+            @Html.Partial("~/Views/Diagnoses/pacientDetails.cshtml", anamnes)
+        }
+    }
+</div>
