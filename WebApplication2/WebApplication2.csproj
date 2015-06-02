@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\SyndromesController.cs" />
     <Compile Include="Controllers\SyndromeTypesController.cs" />
+    <Compile Include="Controllers\VisitDatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,6 +193,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pacient.cs" />
     <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -519,6 +521,27 @@
     <Content Include="Views\Syndromes\pacientDetails.cshtml" />
     <Content Include="Views\Syndromes\pacientEdit.cshtml" />
     <Content Include="Views\Researches\pacientEdit.cshtml" />
+    <Content Include="Views\VisitDates\Create.cshtml" />
+    <Content Include="Views\VisitDates\Delete.cshtml" />
+    <Content Include="Views\VisitDates\Details.cshtml" />
+    <Content Include="Views\VisitDates\Edit.cshtml" />
+    <Content Include="Views\VisitDates\Index.cshtml" />
+    <Content Include="Views\Pacients\documentList.cshtml" />
+    <Content Include="Views\Reviews\pacientCreate.cshtml" />
+    <Content Include="Views\Anamnesis\pacientCreate.cshtml" />
+    <Content Include="Views\Anamnesis\pacientDelete.cshtml" />
+    <Content Include="Views\Diagnoses\pacientCreate.cshtml" />
+    <Content Include="Views\Diagnoses\pacientDelete.cshtml" />
+    <Content Include="Views\Debuts\pacientCreate.cshtml" />
+    <Content Include="Views\Debuts\pacientDelete.cshtml" />
+    <Content Include="Views\Syndromes\pacientCreate.cshtml" />
+    <Content Include="Views\Syndromes\pacientDelete.cshtml" />
+    <Content Include="Views\Researches\pacientCreate.cshtml" />
+    <Content Include="Views\Researches\pacientDelete.cshtml" />
+    <Content Include="Views\Assigments\pacientCreate.cshtml" />
+    <Content Include="Views\Assigments\pacientDelete.cshtml" />
+    <Content Include="Views\Neurostatus\pacientCreate.cshtml" />
+    <Content Include="Views\Neurostatus\pacientDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

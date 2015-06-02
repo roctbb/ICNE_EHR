@@ -10,7 +10,7 @@ namespace WebApplication2.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = false;
             ContextKey = "WebApplication2.Models.PacientDBContext";
         }
 

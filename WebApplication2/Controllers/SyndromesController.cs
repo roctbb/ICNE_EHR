@@ -36,24 +36,41 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Syndromes/Create
-        public ActionResult Create()
+        public ActionResult pacientCreate(int visitID, int num)
         {
-            return View();
+            newSyndrome na = new newSyndrome();
+            na.visitID = visitID;
+            na.num = num;
+            na.syndrome = new Syndrome();
+            na.eventTypes = db.syndromeTypes.ToList();
+            return PartialView(na);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,symptomes,comments,month,year,week,day,minutes,seconds")] Syndrome syndrome)
+        public ActionResult Create(newSyndrome data)
         {
+            VisitDate visit = db.visits.Include(v => v.syndromes).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
+                return RedirectToAction("Index", "Pacients");
+
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                db.syndromes.Add(syndrome);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                SyndromeType type = db.syndromeTypes.Where(a => a.ID == data.syndrome.type.ID).First();
+                data.syndrome.type = type;
+                visit.syndromes.Add(data.syndrome);
 
-            return View(syndrome);
+                db.SaveChanges();
+                return PartialView("/views/Syndromes/pacientDetails.cshtml", data.syndrome);
+            }
+            return PartialView("/views/Syndromes/pacientCreate.cshtml", data);
+
         }
+
 
         // GET: Syndromes/Edit/5
         public ActionResult pacientEdit(int? id)
@@ -86,8 +103,7 @@ namespace WebApplication2.Controllers
             return View(syndrome);
         }
 
-        // GET: Syndromes/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
@@ -98,7 +114,11 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(syndrome);
+            //Syndrom Syndrom = db.anamneses.Find(id);
+            db.syndromes.Remove(syndrome);
+            db.SaveChanges();
+            //return View(Syndrom);
+            return PartialView();
         }
 
         // POST: Syndromes/Delete/5

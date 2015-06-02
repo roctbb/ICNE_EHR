@@ -36,9 +36,14 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Diagnoses/Create
-        public ActionResult Create()
+        public ActionResult pacientCreate(int visitID, int num)
         {
-            return View();
+            newDiagnosis na = new newDiagnosis();
+            na.visitID = visitID;
+            na.num = num;
+            na.diagnosis= new Diagnosis();
+            na.eventTypes = db.diagnosisTypes.ToList();
+            return PartialView(na);
         }
 
         // POST: Diagnoses/Create
@@ -46,16 +51,28 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,comments")] Diagnosis diagnosis)
+        public ActionResult Create(newDiagnosis data)
         {
+            VisitDate visit = db.visits.Include(v => v.diagnoses).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
+                return RedirectToAction("Index", "Pacients");
+
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                db.diagnoses.Add(diagnosis);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                DiagnosisType type = db.diagnosisTypes.Where(a => a.ID == data.diagnosis.type.ID).First();
+                data.diagnosis.type = type;
+                visit.diagnoses.Add(data.diagnosis);
 
-            return View(diagnosis);
+                db.SaveChanges();
+                return PartialView("/views/Diagnoses/pacientDetails.cshtml", data.diagnosis);
+            }
+            return PartialView("/views/Diagnoses/pacientCreate.cshtml", data);
+
         }
 
         // GET: Diagnoses/Edit/5
@@ -90,18 +107,22 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Diagnoses/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Diagnosis diagnosis = db.diagnoses.Find(id);
-            if (diagnosis == null)
+            Diagnosis Diagnosis = db.diagnoses.Find(id);
+            if (Diagnosis == null)
             {
                 return HttpNotFound();
             }
-            return View(diagnosis);
+            //Diagnosis Diagnosis = db.anamneses.Find(id);
+            db.diagnoses.Remove(Diagnosis);
+            db.SaveChanges();
+            //return View(Diagnosis);
+            return PartialView();
         }
 
         // POST: Diagnoses/Delete/5

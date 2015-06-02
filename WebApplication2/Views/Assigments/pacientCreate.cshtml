@@ -1,0 +1,50 @@
+﻿@model WebApplication2.Models.newAssigment
+@using WebApplication2.Models
+@using (Html.BeginForm("Create", "Assigments", FormMethod.Post, new { id = "AssigmentsCreate" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.visitID)
+    @Html.HiddenFor(model => model.num)
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="">
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>
+                        @Html.DropDownListFor(model => model.assigment.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
+                    </strong>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        @Html.EditorFor(model => model.assigment.medicine, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.assigment.medicine) } })
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <a onclick="PostCreateForm('Assigments', @Model.num)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
+                </div>
+            </div>
+            <div class="row alert alert-info" style="margin-top:10px">
+                <div class="col-md-4">
+                    <h4><span class="glyphicon glyphicon-tint" aria-hidden="true"></span> Назначение:</h4>
+                    @Html.EditorFor(model => model.assigment.weight, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.assigment.weight) } })
+
+                    @Html.EditorFor(model => model.assigment.dose, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.assigment.dose) } })
+
+                    @Html.EditorFor(model => model.assigment.inADay, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.assigment.inADay) } })
+
+                </div>
+
+                <div class="col-md-8">
+                    <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @Html.DisplayNameFor(model => model.assigment.comments):</h4>
+                    <p>@Html.EditorFor(model => model.assigment.comments, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.assigment.comments) } })</p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+}

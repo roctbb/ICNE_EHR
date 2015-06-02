@@ -10,113 +10,109 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
-    public class ReviewsController : Controller
+    public class VisitDatesController : Controller
     {
         private PacientDBContext db = new PacientDBContext();
 
-        // GET: Reviews
+        // GET: VisitDates
         public ActionResult Index()
         {
-            return View(db.reviews.ToList());
+            return View(db.visits.ToList());
         }
 
-        // GET: Reviews/Details/5
-        public ActionResult pacientDetails(int? id)
+        // GET: VisitDates/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.reviews.Find(id);
-            if (review == null)
+            VisitDate visitDate = db.visits.Find(id);
+            if (visitDate == null)
             {
                 return HttpNotFound();
             }
-            return PartialView("~/views/Reviews/pacientDetails.cshtml", review);
+            return View(visitDate);
         }
 
+        // GET: VisitDates/Create
 
-        // POST: Reviews/Create
+        // POST: VisitDates/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(int? visitID, Review review)
+        
+        public ActionResult Create(int? id)
         {
-            if (visitID == null)
-                return RedirectToAction("Index", "Pacients");
-
-            VisitDate visit = db.visits.Include(v=>v.reviews).Where(v => v.ID == visitID).First();
-
-            if (visit==null )
-                return RedirectToAction("Index", "Pacients");
-
-            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == visitID)).First();
-            if (pacient == null)
-                return RedirectToAction("Index", "Pacients");
-            if (ModelState.IsValid)
+            if (id==null)
             {
-                visit.reviews.Add(review);
-                db.SaveChanges();
-                return RedirectToAction("Details", "Pacients", new { id = pacient.ID });
+                return RedirectToAction("Index", "Pacients");
             }
-            return RedirectToAction("Details","Pacients", new {id=pacient.ID });
-            
+            Pacient pacient = db.Pacients.Include(p => p.visits).Where(p => p.ID == id).First();
+            if (pacient.visits.Any(p=>p.date == DateTime.Today))
+                return RedirectToAction("Details", "Pacients", new {id=id });
+            VisitDate visitDate = new VisitDate();
+            visitDate.date = DateTime.Today;
+            visitDate.doctorID = 1;
+            db.visits.Add(visitDate);
+            pacient.visits.Add(visitDate);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Pacients", new { id = id });
+
         }
 
-        // GET: Reviews/Edit/5
-        public ActionResult pacientEdit(int? id)
+        // GET: VisitDates/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.reviews.Find(id);
-            if (review == null)
+            VisitDate visitDate = db.visits.Find(id);
+            if (visitDate == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(review);
+            return View(visitDate);
         }
 
-        // POST: Reviews/Edit/5
+        // POST: VisitDates/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult pacientEdit([Bind(Include = "ID,comments")] Review review)
+        public ActionResult Edit([Bind(Include = "ID,doctorID,date")] VisitDate visitDate)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = EntityState.Modified;
+                db.Entry(visitDate).State = EntityState.Modified;
                 db.SaveChanges();
-                return pacientDetails(review.ID);
+                return RedirectToAction("Index");
             }
-            return PartialView(review);
+            return View(visitDate);
         }
 
-        // GET: Reviews/Delete/5
+        // GET: VisitDates/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.reviews.Find(id);
-            if (review == null)
+            VisitDate visitDate = db.visits.Find(id);
+            if (visitDate == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(visitDate);
         }
 
-        // POST: Reviews/Delete/5
+        // POST: VisitDates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.reviews.Find(id);
-            db.reviews.Remove(review);
+            VisitDate visitDate = db.visits.Find(id);
+            db.visits.Remove(visitDate);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

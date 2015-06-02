@@ -7,21 +7,18 @@
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.type.ID)
     <div class="form-horizontal">
-        <dl class="dl-horizontal">
-            <dt>
+        <div class="col-md-4">
+            <strong>
                 @Html.DisplayFor(model => model.type.name)
-            </dt>
-
-            <dd>
-                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+            </strong>
+        </div>
+        <div class="col-md-6">
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.comments) } })
                 @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
-            </dd>
-
-        </dl>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <a onclick="PostEditForm('Anamnesis', @Model.ID);" class="btn">Сохранить</a>
-            </div>
+        </div>
+        <div class="col-md-2">
+            <a onclick="PostEditForm('Anamnesis', @Model.ID);" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></a>
         </div>
     </div> 
 </form>
+

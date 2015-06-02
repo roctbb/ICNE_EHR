@@ -36,27 +36,39 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Anamnesis/Create
-        public ActionResult Create()
+        public ActionResult pacientCreate(int visitID, int num)
         {
-            return View();
+            newAnamnesis na = new newAnamnesis();
+            na.visitID = visitID;
+            na.num = num;
+            na.anamnesis = new Anamnesis();
+            na.eventTypes = db.anamnesisTypes.ToList();
+            return PartialView(na);
         }
-
-        // POST: Anamnesis/Create
-        // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
-        // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,comments")] Anamnesis anamnesis)
+        public ActionResult Create(newAnamnesis data)
         {
+            VisitDate visit = db.visits.Include(v => v.anamnesis).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
+                return RedirectToAction("Index", "Pacients");
+
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                db.anamneses.Add(anamnesis);
+                AnamnesisEventType type = db.anamnesisTypes.Where(a => a.ID == data.anamnesis.type.ID).First();
+                data.anamnesis.type = type;
+                visit.anamnesis.Add(data.anamnesis);
+                
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return PartialView("/views/Anamnesis/pacientDetails.cshtml", data.anamnesis);
             }
+            return PartialView("/views/Anamnesis/pacientCreate.cshtml", data);
 
-            return View(anamnesis);
         }
+        
 
         // GET: Anamnesis/Edit/5
         public ActionResult pacientEdit(int? id)
@@ -91,7 +103,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Anamnesis/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
@@ -102,7 +114,11 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(anamnesis);
+            //Anamnesis anamnesis = db.anamneses.Find(id);
+            db.anamneses.Remove(anamnesis);
+            db.SaveChanges();
+            //return View(anamnesis);
+            return PartialView();
         }
 
         // POST: Anamnesis/Delete/5

@@ -5,15 +5,22 @@
 }
 <div class="row">
     <div class="col-md-2" style=" margin-top: 30px;">
-        <a href="@Url.Action("Index" )" class = "btn btn-default btn-lg"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Назад</span>
+        <a href="@Url.Action("Index" )" class = "btn btn-default btn-lg"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Назад
         </a>
             
     </div>
-    <div class="col-md-10"><h2>@Html.DisplayFor(model => model.name)</h2>
+    <div class="col-md-6"><h2>@Html.DisplayFor(model => model.name)</h2>
 
 
     <h4>@Html.DisplayNameFor(model => model.doctor): @Html.DisplayFor(model => model.doctor)</h4>
+    
     </div>
+        @if (!(Model.visits.First().date.Equals(DateTime.Today)))
+        {
+            <span  style=" margin-top: 30px;margin-right: 30px;" class="pull-right">
+                <a href="@Url.Action("Create", "visitDates", new {id=Model.ID })" class="btn btn-default btn-primary btn-lg"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Начать прием</a>
+            </span>
+    }
 </div>
     <div>
         <hr />

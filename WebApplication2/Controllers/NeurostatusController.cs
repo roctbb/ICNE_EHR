@@ -36,26 +36,43 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Neurostatus/Create
-        public ActionResult Create()
+        public ActionResult pacientCreate(int visitID, int num)
         {
-            return View();
+            newNeurostatus na = new newNeurostatus();
+            na.visitID = visitID;
+            na.num = num;
+            na.neurostatus = new Neurostatus();
+            na.eventTypes = db.neuroStatusTypes.ToList();
+            return PartialView(na);
         }
 
-        // POST: Neurostatus/Create
+        // POST: Debuts/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,description,comments")] Neurostatus neurostatus)
+        public ActionResult Create(newNeurostatus data)
         {
+            VisitDate visit = db.visits.Include(v => v.neurostatuses).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
+                return RedirectToAction("Index", "Pacients");
+
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                db.neurostatuses.Add(neurostatus);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                NeuroStatusType type = db.neuroStatusTypes.Where(a => a.ID == data.neurostatus.type.ID).First();
+                data.neurostatus.type = type;
+                visit.neurostatuses.Add(data.neurostatus);
 
-            return View(neurostatus);
+                db.SaveChanges();
+                return PartialView("/views/Neurostatus/pacientDetails.cshtml", data.neurostatus);
+            }
+            return PartialView("/views/Neurostatus/pacientCreate.cshtml", data);
+
         }
 
         // GET: Neurostatus/Edit/5
@@ -90,7 +107,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Neurostatus/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
@@ -101,7 +118,11 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(neurostatus);
+            //Research Research = db.anamneses.Find(id);
+            db.neurostatuses.Remove(neurostatus);
+            db.SaveChanges();
+            //return View(Research);
+            return PartialView();
         }
 
         // POST: Neurostatus/Delete/5

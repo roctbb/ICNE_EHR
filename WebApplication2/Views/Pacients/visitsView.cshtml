@@ -1,9 +1,11 @@
 ﻿
 @model WebApplication2.Models.Pacient
-@{
-    int num = 1;
-}
+@using WebApplication2.Models
+
 <script>
+    function Delete(controller, id) {
+        $('#' + controller + 'Div' + id).load('/' + controller + '/pacientDelete/' + id);
+    }
     function LoadEditForm( controller, id)
     {
         $('#' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
@@ -15,203 +17,42 @@
             url: '/' + controller + '/pacientEdit/' + id,
             data: $('#' + controller + 'Edit' + id).serialize(), // serializes the form's elements.
             success: function (data) {
-                $('#' + controller + 'Div' + id).html(data);
+                res = $.parseHTML('<div>'+data+'</div>');
+                $('#' + controller + 'Div' + id).html($(res).find('#' + controller + 'Div' + id).html());
             }
         });
         
     }
+    function PostCreateForm(controller, num, mce) {
+        if (mce == true) tinyMCE.triggerSave();
+        $.ajax({
+            type: "POST",
+            url: '/' + controller + '/Create/',
+            data: $('#' + controller + 'Create').serialize(), // serializes the form's elements.
+            success: function (data) {
+                res = $.parseHTML('<div><div>' + data + '</div></div>');
+                $('#documentData'+ num).append($(res).find('div').first().html());
+            }
+        });
+
+    }
 
 </script>
+
+@if (Model.visits.First().date.Equals(DateTime.Today))
+{
+    @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList { num = 1, add = true, visit = Model.visits.First() });
+}
+@{
+    int num = 9;
+}
 @foreach (var visit in Model.visits)
 {
-    <div class="bs-callout bs-callout-success">
-        <h5>Прием @visit.date</h5>
-        @if (visit.anamnesis.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Анамнез<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var anamnes in visit.anamnesis)
-                            {
-                                @Html.Partial("~/Views/Anamnesis/pacientDetails.cshtml", anamnes);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.debutes.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Дебют<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var debut in visit.debutes)
-                            {
-                                @Html.Partial("~/Views/Debuts/pacientDetails.cshtml", debut);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.diagnoses.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Диагноз<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var diagnosis in visit.diagnoses)
-                            {
-                                @Html.Partial("~/Views/Diagnoses/pacientDetails.cshtml", diagnosis);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.syndromes.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Приступы<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var syndrome in visit.syndromes)
-                            {
-                                @Html.Partial("~/Views/Syndromes/pacientDetails.cshtml", syndrome);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.researches.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Исследования<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var research in visit.researches)
-                            {
-                                @Html.Partial("~/Views/Researches/pacientDetails.cshtml", research);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.assigments.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Назначения<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var assigment in visit.assigments)
-                            {
-                                @Html.Partial("~/Views/Assigments/pacientDetails.cshtml", assigment);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-        @if (visit.neurostatuses.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Невростатус<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var neuro in visit.neurostatuses)
-                            {
-                                @Html.Partial("~/Views/Neurostatus/pacientDetails.cshtml", neuro);
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
+    if (visit.date.Equals(DateTime.Today))
+    {
+        continue;
+    }
+    @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList {num = num, add=false, visit=visit });
+    num = num + 8;
 
-        @if (visit.reviews.Count > 0)
-        {
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="@String.Format("#documentHeading{0}", num)" onclick="$('@String.Format("#document{0}", num)').collapse('toogle');">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="@String.Format("#document{0}", num)" aria-expanded="true" aria-controls="collapseOne">
-                                Резюме<span class="pull-right"><small>@visit.date</small></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="@String.Format("document{0}", num)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            @foreach (var review in visit.reviews)
-                            {
-                                
-                                //Html.Partial("~/Views/Reviews/pacientDetails.cshtml", review);
-                                @Html.Action("pacientDetails", "Reviews", new { id = review.ID });
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            num = num + 1;
-        }
-    </div>
 }

@@ -36,9 +36,14 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Assigments/Create
-        public ActionResult Create()
+        public ActionResult pacientCreate(int visitID, int num)
         {
-            return View();
+            newAssigment na = new newAssigment();
+            na.visitID = visitID;
+            na.num = num;
+            na.assigment = new Assigment();
+            na.eventTypes = db.assigmentTypes.ToList();
+            return PartialView(na);
         }
 
         // POST: Assigments/Create
@@ -46,16 +51,28 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,weight,dose,inADay,comments,medicine")] Assigment assigment)
+        public ActionResult Create(newAssigment data)
         {
+            VisitDate visit = db.visits.Include(v => v.assigments).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
+                return RedirectToAction("Index", "Pacients");
+
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                db.assigments.Add(assigment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                AssigmentType type = db.assigmentTypes.Where(a => a.ID == data.assigment.type.ID).First();
+                data.assigment.type = type;
+                visit.assigments.Add(data.assigment);
 
-            return View(assigment);
+                db.SaveChanges();
+                return PartialView("/views/Assigments/pacientDetails.cshtml", data.assigment);
+            }
+            return PartialView("/views/Assigments/pacientCreate.cshtml", data);
+
         }
 
         // GET: Assigments/Edit/5
@@ -90,7 +107,7 @@ namespace WebApplication2.Controllers
         }
 
         // GET: Assigments/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
@@ -101,7 +118,11 @@ namespace WebApplication2.Controllers
             {
                 return HttpNotFound();
             }
-            return View(assigment);
+            //Debut Debut = db.anamneses.Find(id);
+            db.assigments.Remove(assigment);
+            db.SaveChanges();
+            //return View(Debut);
+            return PartialView();
         }
 
         // POST: Assigments/Delete/5
