@@ -5,14 +5,15 @@
 <div class="bs-callout bs-callout-success">
     <h5>Назначения</h5>
     <p>&nbsp;</p>
-
-    @foreach (var visit in Model.visits)
-    {
-        foreach (var anamnes in visit.assigments)
+    <div class="tabContent">
+        @foreach (var visit in Model.visits)
         {
-            @Html.Partial("~/Views/Assigments/pacientDetails.cshtml", anamnes)
+            foreach (var anamnes in visit.assigments.Where(a => a.actual == 0))
+            {
+                @Html.Partial("~/Views/Assigments/pacientDetails.cshtml", anamnes)
+            }
         }
-    }
-</div>
+        </div>
+    </div>
 
 

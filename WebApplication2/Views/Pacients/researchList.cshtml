@@ -6,12 +6,14 @@
 <div class="bs-callout bs-callout-success">
     <h5>Исследования</h5>
     <p>&nbsp;</p>
-
-    @foreach (var visit in Model.visits)
-    {
-        foreach (var anamnes in visit.researches)
+    <div class="tabContent">
+        @foreach (var visit in Model.visits)
         {
-            @Html.Partial("~/Views/Researches/pacientDetails.cshtml", anamnes)
+            foreach (var anamnes in visit.researches)
+            {
+                @Html.Partial("~/Views/Researches/pacientDetails.cshtml", anamnes)
+            }
         }
-    }
-</div>
+        </div>
+
+    </div>

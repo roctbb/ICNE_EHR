@@ -66,6 +66,7 @@ namespace WebApplication2.Controllers
             {
                 AssigmentType type = db.assigmentTypes.Where(a => a.ID == data.assigment.type.ID).First();
                 data.assigment.type = type;
+                data.assigment.cancelDate = DateTime.Today;
                 visit.assigments.Add(data.assigment);
 
                 db.SaveChanges();
@@ -95,11 +96,12 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult pacientEdit([Bind(Include = "ID,weight,dose,inADay,comments,medicine")] Assigment assigment)
+        public ActionResult pacientEdit( Assigment assigment)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(assigment).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return pacientDetails(assigment.ID);
             }
@@ -124,7 +126,24 @@ namespace WebApplication2.Controllers
             //return View(Debut);
             return PartialView();
         }
-
+        public ActionResult pacientCancel(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Assigment assigment = db.assigments.Find(id);
+            if (assigment == null)
+            {
+                return HttpNotFound();
+            }
+            //Debut Debut = db.anamneses.Find(id);
+            assigment.actual = 1;
+            assigment.cancelDate = DateTime.Today;
+            db.SaveChanges();
+            //return View(Debut);
+            return PartialView();
+        }
         // POST: Assigments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

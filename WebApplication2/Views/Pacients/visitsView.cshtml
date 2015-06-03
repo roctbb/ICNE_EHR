@@ -7,16 +7,29 @@
         $('#' + controller + 'Div' + id).load('/' + controller + '/pacientDelete/' + id);
         $('.' + controller + 'Div' + id).load('/' + controller + '/pacientDelete/' + id);
     }
+    function Cancel(controller, id) {
+        $("#" + controller + "Tab").find('#' + controller + 'Div' + id).load('/' + controller + '/pacientCancel/' + id);
+        $("#" + controller + "Tab").find('.' + controller + 'Div' + id).load('/' + controller + '/pacientCancel/' + id);
+    }
     function LoadEditForm(controller, id) {
-        $('#' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
-        $('.' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+        if ($("#" + controller + "Tab").hasClass("active"))
+        {
+            $("#" + controller + "Tab").find('#' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+            $("#" + controller + "Tab").find('.' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+        }
+        else
+        {
+            $("#dateTab").find('#' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+            $("#dateTab").find('.' + controller + 'Div' + id).load('/' + controller + '/pacientEdit/' + id);
+        }
+        
     }
     function PostEditForm(controller, id, mce) {
         if (mce == true) tinyMCE.triggerSave();
         $.ajax({
             type: "POST",
             url: '/' + controller + '/pacientEdit/' + id,
-            data: $('#' + controller + 'Edit' + id).serialize(), // serializes the form's elements.
+            data: $('.' + controller + 'Edit' + id).serialize() + $('#' + controller + 'Edit' + id).serialize(), // serializes the form's elements.
             success: function (data) {
                 res = $.parseHTML('<div>' + data + '</div>');
                 if ($(res).find('.' + controller + 'Div' + id).html() != "")
@@ -40,7 +53,8 @@
             data: $('#' + controller + 'Create').serialize(), // serializes the form's elements.
             success: function (data) {
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
-                $('#documentData' + num).append($(res).find('div').first().html());
+                $('#documentData' + num).prepend($(res).find('div').first().html());
+                $('#'+controller+'Tab').find('.tabContent').prepend($(res).find('div').first().html());
             }
         });
 
@@ -50,18 +64,18 @@
 
 <div role="tabpanel">
     <ul class="nav  nav-pills nav-justified">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Приемы</a></li>
-        <li role="presentation"><a href="#anamnesisTab" aria-controls="anamnesisTab" role="tab" data-toggle="tab">Анамнез</a></li>
-        <li role="presentation"><a href="#debutTab" aria-controls="debutTab" role="tab" data-toggle="tab">Дебют</a></li>
-        <li role="presentation"><a href="#diagnosisTab" aria-controls="diagnosisTab" role="tab" data-toggle="tab">Диагнозы</a></li>
-        <li role="presentation"><a href="#syndromTab" aria-controls="syndromTab" role="tab" data-toggle="tab">Приступы</a></li>
-        <li role="presentation"><a href="#researchTab" aria-controls="researchTab" role="tab" data-toggle="tab">Исследования</a></li>
-        <li role="presentation"><a href="#assigmentTab" aria-controls="assigmentTab" role="tab" data-toggle="tab">Назначения</a></li>
-        <li role="presentation"><a href="#neurostatusTab" aria-controls="neurostatusTab" role="tab" data-toggle="tab">Невростатус</a></li>
-        <li role="presentation"><a href="#reviewTab" aria-controls="reviewTab" role="tab" data-toggle="tab">Резюме</a></li>
+        <li role="presentation" class="active"><a href="#dateTab" aria-controls="dateTab" role="tab" data-toggle="tab">Приемы</a></li>
+        <li role="presentation"><a href="#AnamnesisTab" aria-controls="AnamnesisTab" role="tab" data-toggle="tab">Анамнез</a></li>
+        <li role="presentation"><a href="#DebutsTab" aria-controls="DebutsTab" role="tab" data-toggle="tab">Дебют</a></li>
+        <li role="presentation"><a href="#DiagnosesTab" aria-controls="DiagnosesTab" role="tab" data-toggle="tab">Диагнозы</a></li>
+        <li role="presentation"><a href="#SyndromesTab" aria-controls="SyndromesTab" role="tab" data-toggle="tab">Приступы</a></li>
+        <li role="presentation"><a href="#ResearchesTab" aria-controls="ResearchesTab" role="tab" data-toggle="tab">Исследования</a></li>
+        <li role="presentation"><a href="#AssigmentsTab" aria-controls="AssigmentsTab" role="tab" data-toggle="tab">Назначения</a></li>
+        <li role="presentation"><a href="#NeurostatusTab" aria-controls="NeurostatusTab" role="tab" data-toggle="tab">Невростатус</a></li>
+        <li role="presentation"><a href="#ReviewsTab" aria-controls="ReviewsTab" role="tab" data-toggle="tab">Резюме</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active fade in" id="home">
+        <div role="tabpanel" class="tab-pane active fade in" id="dateTab">
             @if (Model.visits.First().date.Equals(DateTime.Today))
             {
                 @Html.Partial("~/Views/Pacients/documentList.cshtml", new documentList { num = 1, add = true, visit = Model.visits.First() });
@@ -80,28 +94,28 @@
 
             }
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="anamnesisTab">
+        <div role="tabpanel" class="tab-pane fade" id="AnamnesisTab">
             @Html.Partial("~/Views/Pacients/anamnesisList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="debutTab">
+        <div role="tabpanel" class="tab-pane fade" id="DebutsTab">
             @Html.Partial("~/Views/Pacients/debutList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="diagnosisTab">
+        <div role="tabpanel" class="tab-pane fade" id="DiagnosesTab">
             @Html.Partial("~/Views/Pacients/diagnosisList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="syndromTab">
+        <div role="tabpanel" class="tab-pane fade" id="SyndromesTab">
             @Html.Partial("~/Views/Pacients/syndromList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="researchTab">
+        <div role="tabpanel" class="tab-pane fade" id="ResearchesTab">
             @Html.Partial("~/Views/Pacients/researchList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="assigmentTab">
+        <div role="tabpanel" class="tab-pane fade" id="AssigmentsTab">
             @Html.Partial("~/Views/Pacients/assigmentList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="neurostatusTab">
+        <div role="tabpanel" class="tab-pane fade" id="NeurostatusTab">
             @Html.Partial("~/Views/Pacients/neurostatusList.cshtml", Model);
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="reviewTab">
+        <div role="tabpanel" class="tab-pane fade" id="ReviewsTab">
             @Html.Partial("~/Views/Pacients/reviewList.cshtml", Model);
         </div>
     </div>

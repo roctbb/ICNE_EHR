@@ -200,6 +200,10 @@ namespace WebApplication2.Models
         [DisplayName("Лекарство")]
         
         public String medicine { get; set; }
+        [DefaultValue(1)]
+        public int actual { get; set; }
+        public DateTime cancelDate { get; set; }
+
 
 
     }

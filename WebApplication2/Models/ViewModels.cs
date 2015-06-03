@@ -15,6 +15,7 @@ namespace WebApplication2.Models
     {
         public Review review { get; set; }
         public int visitID { get; set; }
+        public int? num { get; set; }
 
     }
     public class newAnamnesis

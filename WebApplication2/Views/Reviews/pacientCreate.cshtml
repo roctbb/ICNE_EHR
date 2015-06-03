@@ -1,30 +1,24 @@
 ﻿@model WebApplication2.Models.newReview
 @using WebApplication2.Models
-@{ 
-    Review review = Model.review;
-}
-@using (Html.BeginForm("Create", "Reviews", new{ visitID = Model.visitID}))
+@using (Html.BeginForm("Create", "Reviews", FormMethod.Post, new { id = "ReviewsCreate" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.visitID)
+    @Html.HiddenFor(model => model.num)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
 
-    <div class="form-horizontal">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         
-
-        <div class="form-group">
+        
             
-            <div class="col-md-12">
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.review.comments, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.review.comments, "", new { @class = "text-danger" })
             </div>
-        </div>
+            <div class="col-md-2">
+                <a onclick="PostCreateForm('Reviews', @Model.num, true)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 
-        <div class="form-group">
-            <div class="col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
-        </div>
     </div>
     <hr>
 }

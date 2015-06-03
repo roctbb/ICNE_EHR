@@ -5,6 +5,8 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.type.ID)
+    @Html.HiddenFor(model => model.cancelDate)
+    @Html.HiddenFor(model => model.actual)
     <div class="row">
         <div class="col-md-4">
             <strong>

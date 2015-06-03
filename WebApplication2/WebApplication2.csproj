@@ -549,6 +549,8 @@
     <Content Include="Views\Pacients\researchList.cshtml" />
     <Content Include="Views\Pacients\syndromList.cshtml" />
     <Content Include="Views\Pacients\reviewList.cshtml" />
+    <Content Include="Views\Assigments\pacientCancel.cshtml" />
+    <Content Include="Views\Reviews\pacientDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

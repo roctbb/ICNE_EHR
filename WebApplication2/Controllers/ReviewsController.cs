@@ -34,34 +34,41 @@ namespace WebApplication2.Controllers
             }
             return PartialView("~/views/Reviews/pacientDetails.cshtml", review);
         }
-
+        public ActionResult pacientCreate(int visitID, int num)
+        {
+            newReview na = new newReview();
+            na.visitID = visitID;
+            na.num = num;
+            na.review = new Review();
+            return PartialView(na);
+        }
 
         // POST: Reviews/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int? visitID, Review review)
+        public ActionResult Create(newReview data)
         {
-            if (visitID == null)
+            VisitDate visit = db.visits.Include(v => v.reviews).Where(v => v.ID == data.visitID).First();
+
+            if (visit == null)
                 return RedirectToAction("Index", "Pacients");
 
-            VisitDate visit = db.visits.Include(v=>v.reviews).Where(v => v.ID == visitID).First();
-
-            if (visit==null )
-                return RedirectToAction("Index", "Pacients");
-
-            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == visitID)).First();
+            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
             if (pacient == null)
                 return RedirectToAction("Index", "Pacients");
+
             if (ModelState.IsValid)
             {
-                visit.reviews.Add(review);
+             
+                visit.reviews.Add(data.review);
+
                 db.SaveChanges();
-                return RedirectToAction("Details", "Pacients", new { id = pacient.ID });
+                return PartialView("/views/Reviews/pacientDetails.cshtml", data.review);
             }
-            return RedirectToAction("Details","Pacients", new {id=pacient.ID });
-            
+            return PartialView("/views/Reviews/pacientCreate.cshtml", data);
+
         }
 
         // GET: Reviews/Edit/5
@@ -94,7 +101,23 @@ namespace WebApplication2.Controllers
             }
             return PartialView(review);
         }
-
+        public ActionResult pacientDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Review review = db.reviews.Find(id);
+            if (review == null)
+            {
+                return HttpNotFound();
+            }
+            //Research Research = db.anamneses.Find(id);
+            db.reviews.Remove(review);
+            db.SaveChanges();
+            //return View(Research);
+            return PartialView();
+        }
         // GET: Reviews/Delete/5
         public ActionResult Delete(int? id)
         {

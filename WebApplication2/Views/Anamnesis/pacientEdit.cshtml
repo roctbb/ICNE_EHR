@@ -1,7 +1,7 @@
 ﻿
 @model WebApplication2.Models.Anamnesis
 
-<form id="@String.Format("AnamnesisEdit{0}", Model.ID)">
+<form class="@String.Format("AnamnesisEdit{0}", Model.ID)">
 
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID)
