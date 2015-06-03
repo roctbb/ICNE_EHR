@@ -54,7 +54,8 @@
             success: function (data) {
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
                 $('#documentData' + num).prepend($(res).find('div').first().html());
-                $('#'+controller+'Tab').find('.tabContent').prepend($(res).find('div').first().html());
+                $('#' + controller + 'Tab').find('.tabContent').prepend($(res).find('div').first().html());
+                $('#' + controller + 'Create').trigger('reset');
             }
         });
 
