@@ -14,12 +14,9 @@ using System.Web.Mvc;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
-        public string test()
-        {
-            return "ready";
-        }
         [HttpPost]
         public string ConvertImageToBase64()
         {

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title – приложение ASP.NET</title>
+    <title>@ViewBag.Title – ICNE EHR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -14,7 +14,7 @@
     <script src="@Url.Content("~/Scripts/tinymce/tiny_mce.js")" type="text/javascript"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,37 +22,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("ICNE EHR", "Index", "Pacients", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("База пациентов", "Index", "Pacients")</li>
+                    <li>@Html.ActionLink("Расписание", "Index", "Pacients")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Настройка <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">Персонал</li>
+                            <li class="">@Html.ActionLink("Врачи", "Index", "Doctors")</li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Словари</li>
+                            <li class="">@Html.ActionLink("Поля анамнеза", "Index", "AnamnesisEventTypes")</li>
+                            <li class="">@Html.ActionLink("Типы лечения", "Index", "AssigmentTypes")</li>
+                            <li class="">@Html.ActionLink("Поля дебюта", "Index", "DebutTypes")</li>
+                            <li class="">@Html.ActionLink("Типы диагнозов", "Index", "DiagnosisTypes")</li>
+                            <li class="">@Html.ActionLink("Типы лекарств", "Index", "MedicineTypes")</li>
+                            <li class="">@Html.ActionLink("Типы невростатусов", "Index", "NeuroStatusTypes")</li>
+                            <li class="">@Html.ActionLink("Виды исследований", "Index", "ResearchTypes")</li>
+                            <li class="">@Html.ActionLink("Виды приступов", "Index", "SyndromeTypes")</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row"  style="margin-left:0; margin-right:0;">
-            <div class="col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li>@Html.ActionLink("Пациенты", "Index", "Pacients")</li>
-                    <li>@Html.ActionLink("Добавить пациента", "Create", "Pacients")</li>
-                </ul>
-                <ul class="nav nav-sidebar">
-                    <li class="">@Html.ActionLink("Поля анамнеза", "Index", "AnamnesisEventTypes")</li>
-                    <li class="">@Html.ActionLink("Типы лечения", "Index", "AssigmentTypes")</li>
-                    <li class="">@Html.ActionLink("Поля дебюта", "Index", "DebutTypes")</li>
-                    <li class="">@Html.ActionLink("Типы диагнозов", "Index", "DiagnosisTypes")</li>
-                    <li class="">@Html.ActionLink("Типы лекарств", "Index", "MedicineTypes")</li>
-                    <li class="">@Html.ActionLink("Типы невростатусов", "Index", "NeuroStatusTypes")</li>
-                    <li class="">@Html.ActionLink("Виды исследований", "Index", "ResearchTypes")</li>
-                    <li class="">@Html.ActionLink("Виды приступов", "Index", "SyndromeTypes")</li>
-                </ul>
-            </div>
-            <div class="col-md-10 col-md-offset-2 main">
+    <div class="container">
+    
+            
+
 
 
                 <!--<div class="container body-content">
@@ -63,8 +64,7 @@
                     </footer>
                 </div>-->
                 @RenderBody()
-            </div>
-            </div>
+
         </div>
 
 

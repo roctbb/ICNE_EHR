@@ -262,7 +262,13 @@ namespace WebApplication2.Models
         public int? seconds { get; set; }
 
     }
+    public class Doctor
+    {
+        public int ID { get; set; }
+        public String name { get; set; }
+        public String specialisation { get; set; }
 
+    }
     public enum Sex
     {
         [Display(Name = "Противоречивый")]
@@ -282,7 +288,7 @@ namespace WebApplication2.Models
     {
         public int ID { get; set; }
         [DisplayName("Лечащий врач")]
-        public int? doctor { get; set; }
+        public Doctor doctor { get; set; }
         [DisplayName("ФИО")]
         public String name { get; set; }
         [DisplayName("Номер карты")]
@@ -298,8 +304,9 @@ namespace WebApplication2.Models
 
         public Sex sex { get; set; }
         [DisplayName("Дата рождения")]
- 
+
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime birthday { get; set; }
         [DisplayName("Мать")]
         public String mother { get; set; }
@@ -321,7 +328,7 @@ namespace WebApplication2.Models
     }
     public class PacientDBContext : DbContext
     {
-        public DbSet<Pacient> Pacients { get; set; }
+        public DbSet<Pacient> pacients { get; set; }
         public DbSet<AnamnesisEventType> anamnesisTypes { get; set; }
         public DbSet<Anamnesis> anamneses { get; set; }
         public DbSet<Debut> debutes { get; set; }
@@ -340,6 +347,7 @@ namespace WebApplication2.Models
         public DbSet<SyndromeType> syndromeTypes { get; set; }
         public DbSet<Review> reviews { get; set; }
         public DbSet<VisitDate> visits { get; set; }
+        public DbSet<Doctor> doctors { get; set; }
 
     }
 }

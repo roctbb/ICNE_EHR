@@ -58,7 +58,7 @@ namespace WebApplication2.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return PartialView();
         }
 
         //
@@ -70,7 +70,7 @@ namespace WebApplication2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
 
             // Сбои при входе не приводят к блокированию учетной записи
@@ -79,7 +79,8 @@ namespace WebApplication2.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Pacients");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -87,7 +88,7 @@ namespace WebApplication2.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Неудачная попытка входа.");
-                    return View(model);
+                    return PartialView(model);
             }
         }
 
@@ -163,7 +164,7 @@ namespace WebApplication2.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Pacients");
                 }
                 AddErrors(result);
             }
@@ -196,7 +197,7 @@ namespace WebApplication2.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -223,7 +224,7 @@ namespace WebApplication2.Controllers
 
         //
         // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
+
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -231,7 +232,7 @@ namespace WebApplication2.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -240,7 +241,6 @@ namespace WebApplication2.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -392,7 +392,7 @@ namespace WebApplication2.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Pacient");
         }
 
         //
@@ -449,7 +449,7 @@ namespace WebApplication2.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Pacient");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

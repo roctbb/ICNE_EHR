@@ -24,10 +24,13 @@
         <div class="col-md-4">
                 
         </div>
+        @if (Model.comments!=null)
+        { 
         <div class="col-md-6  alert alert-info">
             <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @Html.DisplayNameFor(model => model.comments):</h4>
             <p>@Html.DisplayFor(model => model.comments)</p>
         </div>
-        </div>
+        }
+    </div>
 </div>
 <hr />

@@ -10,6 +10,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     public class DebutTypesController : Controller
     {
         private PacientDBContext db = new PacientDBContext();

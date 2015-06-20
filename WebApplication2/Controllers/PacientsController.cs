@@ -10,6 +10,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     public class PacientsController : Controller
     {
         private PacientDBContext db = new PacientDBContext();
@@ -23,10 +24,10 @@ namespace WebApplication2.Controllers
         {
             
             if (mode.Equals("name"))
-                return PartialView(db.Pacients.Where(p => p.name.Contains(name)).ToList());
+                return PartialView(db.pacients.Where(p => p.name.Contains(name)).ToList());
             else
             {
-                var results = db.Pacients.Where(p => p.visits.Any(vd => vd.reviews.Any(r => r.comments.ToLower().Contains(name.ToLower()))));
+                var results = db.pacients.Where(p => p.visits.Any(vd => vd.reviews.Any(r => r.comments.ToLower().Contains(name.ToLower()))));
                 return PartialView(results.ToList());
             }
         }
@@ -37,8 +38,9 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // db.
-            Pacient pacient = db.Pacients
+            //db.
+            Pacient pacient = db.pacients
+                .Include(p=>p.doctor)
                  .Include(p => p.visits.Select(w => w.anamnesis.Select(r=>r.type)))
                  .Include(p => p.visits.Select(w => w.debutes.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.diagnoses.Select(r => r.type)))
@@ -56,7 +58,10 @@ namespace WebApplication2.Controllers
         // GET: Pacients/Create
         public ActionResult Create()
         {
-            return View();
+            newPacient na = new newPacient();
+            na.pacient = new Pacient();
+            na.doctors = db.doctors.ToList();
+            return View(na);
         }
 
         // POST: Pacients/Create
@@ -64,16 +69,21 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,doctor,name,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight,comments")] Pacient pacient)
+        public ActionResult Create(newPacient data)
         {
+            data.pacient.dateOfregistration = DateTime.Today;
+            Doctor d = db.doctors.Where(t => t.ID == data.pacient.doctor.ID).First();
+            if (d==null)
+                return RedirectToAction("Index", "Pacients");
+            data.pacient.doctor = d;
             if (ModelState.IsValid)
             {
-                db.Pacients.Add(pacient);
+                db.pacients.Add(data.pacient);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {id=data.pacient.ID});
             }
 
-            return View(pacient);
+            return View(data);
         }
 
         // GET: Pacients/Edit/5
@@ -83,12 +93,16 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pacient pacient = db.Pacients.Find(id);
+            Pacient pacient = db.pacients.Find(id);
+            newPacient na = new newPacient();
+            na.pacient = pacient;
+            
             if (pacient == null)
             {
                 return HttpNotFound();
             }
-            return View(pacient);
+            na.doctors = db.doctors.ToList();
+            return View(na);
         }
 
         // POST: Pacients/Edit/5
@@ -96,15 +110,33 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,doctor,name,cart,phone,dateOfregistration,sex,birthday,mother,father,adress,weight,comments")] Pacient pacient)
+        public ActionResult Edit(newPacient data)
         {
+
+            Doctor d = db.doctors.Where(t => t.ID == data.pacient.doctor.ID).First();
+            Pacient pc = db.pacients.Find(data.pacient.ID);
+            
+            if (d == null)
+                return RedirectToAction("Index", "Pacients");
+            //pc = data.pacient;
+            //pc.doctor = dr;
             if (ModelState.IsValid)
             {
-                db.Entry(pacient).State = EntityState.Modified;
+
+                pc.adress = data.pacient.adress;
+                pc.birthday = data.pacient.birthday;
+                pc.cart = data.pacient.cart;
+                pc.comments = data.pacient.comments;
+                pc.doctor = d;
+                pc.father = data.pacient.father;
+                pc.mother = data.pacient.mother;
+                pc.name = data.pacient.name;
+                pc.phone = data.pacient.phone;
+                pc.sex = data.pacient.sex;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
             }
-            return View(pacient);
+            return RedirectToAction("Details", new {id=pc.ID });
         }
 
         // GET: Pacients/Delete/5
@@ -114,12 +146,19 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pacient pacient = db.Pacients.Find(id);
+            Pacient pacient = db.pacients.Include(p=>p.visits).Where(p=>p.ID == id).First();
             if (pacient == null)
             {
                 return HttpNotFound();
             }
-            return View(pacient);
+            VisitDatesController vdt = new VisitDatesController();
+            foreach (var item in pacient.visits.ToList())
+            {
+                vdt.Delete(item.ID);
+            }
+            db.pacients.Remove(pacient);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: Pacients/Delete/5
@@ -127,8 +166,8 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pacient pacient = db.Pacients.Find(id);
-            db.Pacients.Remove(pacient);
+            Pacient pacient = db.pacients.Find(id);
+            db.pacients.Remove(pacient);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

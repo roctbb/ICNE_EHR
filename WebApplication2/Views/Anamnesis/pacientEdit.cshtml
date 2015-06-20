@@ -17,6 +17,7 @@
                 @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-2">
+            <a onclick="CancelEdit('Anamnesis', @Model.ID);" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
             <a onclick="PostEditForm('Anamnesis', @Model.ID);" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></a>
         </div>
     </div> 

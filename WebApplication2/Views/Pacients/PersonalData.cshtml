@@ -1,0 +1,82 @@
+﻿@model WebApplication2.Models.Pacient
+@using WebApplication2.Models
+<div class="bs-callout bs-callout-success">
+    
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateOfregistration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateOfregistration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.birthday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.birthday)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mother)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mother)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.father)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.father)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comments)
+        </dd>
+
+    </dl>
+    @Html.ActionLink("Редактировать данные пациента", "Edit", new { id = Model.ID }, new { @class = "btn btn-success btn-sm", style = "margin: 15px;" })
+    @Html.ActionLink("Удалить пациента из системы", "Delete", new { id = Model.ID }, new { @class = "btn btn-danger btn-sm pull-right", style = "margin: 15px;" })
+</div>

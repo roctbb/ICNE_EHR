@@ -15,7 +15,9 @@
             @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
         </div>
-        <div class="col-md-2">
+        <a class="btn btn-sm btn-warning" onclick="CancelEdit('Researches', @Model.ID);">
+            <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        </a>
             <a class="btn btn-sm btn-primary" onclick="PostEditForm('Researches', @Model.ID);">
                 <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
             </a>

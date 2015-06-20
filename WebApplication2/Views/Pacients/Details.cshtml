@@ -12,111 +12,17 @@
     <div class="col-md-6"><h2>@Html.DisplayFor(model => model.name)</h2>
 
 
-    <h4>@Html.DisplayNameFor(model => model.doctor): @Html.DisplayFor(model => model.doctor)</h4>
+    <h4>@Html.DisplayNameFor(model => model.doctor): @Html.DisplayFor(model => model.doctor.name)</h4>
     
     </div>
-        @if (!(Model.visits.First().date.Equals(DateTime.Today)))
+        @if (Model.visits.Count==0 || !(Model.visits.First().date.Equals(DateTime.Today)))
         {
             <span  style=" margin-top: 30px;margin-right: 30px;" class="pull-right">
                 <a href="@Url.Action("Create", "visitDates", new {id=Model.ID })" class="btn btn-default btn-primary btn-lg"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Начать прием</a>
             </span>
     }
 </div>
-    <div>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.doctor)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.doctor)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.cart)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.cart)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.phone)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.phone)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.dateOfregistration)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.dateOfregistration)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.sex)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.sex)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.birthday)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.birthday)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.mother)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.mother)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.father)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.father)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.adress)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.adress)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.comments)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.comments)
-            </dd>
-
-        </dl>
-    </div>
+  <hr /> 
 @Html.Partial("~/Views/Pacients/visitsView.cshtml", Model)
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-            
-        </p>
+
+

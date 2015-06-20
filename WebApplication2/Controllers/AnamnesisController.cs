@@ -10,6 +10,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     public class AnamnesisController : Controller
     {
         private PacientDBContext db = new PacientDBContext();
@@ -52,7 +53,7 @@ namespace WebApplication2.Controllers
             if (visit == null)
                 return RedirectToAction("Index", "Pacients");
 
-            Pacient pacient = db.Pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
+            Pacient pacient = db.pacients.Where(p => p.visits.Any(v => v.ID == data.visitID)).First();
             if (pacient == null)
                 return RedirectToAction("Index", "Pacients");
 

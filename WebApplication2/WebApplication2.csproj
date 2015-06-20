@@ -168,6 +168,7 @@
     <Compile Include="Controllers\DebutTypesController.cs" />
     <Compile Include="Controllers\DiagnosesController.cs" />
     <Compile Include="Controllers\DiagnosisTypesController.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -200,6 +201,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\logo.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -207,7 +209,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram3.cd" />
+    <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\dialog.html" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -217,6 +222,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugin.js" />
+    <Content Include="Scripts\plugin.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tinymce\dialog.html" />
@@ -232,6 +239,9 @@
     <Content Include="Scripts\tinymce\plugins\autoresize\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\autosave\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\base64_image\dialog.html" />
+    <Content Include="Scripts\tinymce\plugins\base64_image\plugin.js" />
+    <Content Include="Scripts\tinymce\plugins\base64_image\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\bbcode\plugin.js" />
     <Content Include="Scripts\tinymce\plugins\bbcode\plugin.min.js" />
     <Content Include="Scripts\tinymce\plugins\charmap\plugin.js" />
@@ -374,7 +384,9 @@
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -394,7 +406,7 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Login_.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -408,10 +420,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Pacients\Create.cshtml" />
-    <Content Include="Views\Pacients\Delete.cshtml" />
     <Content Include="Views\Pacients\Details.cshtml" />
-    <Content Include="Views\Pacients\Edit.cshtml" />
     <Content Include="Views\Pacients\Index.cshtml" />
     <Content Include="Views\Pacients\SearchByName.cshtml" />
     <Content Include="Views\AnamnesisEventTypes\Create.cshtml" />
@@ -460,41 +469,11 @@
     <Content Include="Views\Anamnesis\Edit.cshtml" />
     <Content Include="Views\Anamnesis\Index.cshtml" />
     <Content Include="Views\Anamnesis\pacientDetails.cshtml" />
-    <Content Include="Views\Debuts\Create.cshtml" />
-    <Content Include="Views\Debuts\Delete.cshtml" />
-    <Content Include="Views\Debuts\Details.cshtml" />
-    <Content Include="Views\Debuts\Edit.cshtml" />
-    <Content Include="Views\Debuts\Index.cshtml" />
     <Content Include="Views\Debuts\pacientDetails.cshtml" />
-    <Content Include="Views\Diagnoses\Create.cshtml" />
-    <Content Include="Views\Diagnoses\Delete.cshtml" />
-    <Content Include="Views\Diagnoses\Details.cshtml" />
-    <Content Include="Views\Diagnoses\Edit.cshtml" />
-    <Content Include="Views\Diagnoses\Index.cshtml" />
     <Content Include="Views\Diagnoses\pacientDetails.cshtml" />
-    <Content Include="Views\Researches\Create.cshtml" />
-    <Content Include="Views\Researches\Delete.cshtml" />
-    <Content Include="Views\Researches\Details.cshtml" />
-    <Content Include="Views\Researches\Edit.cshtml" />
-    <Content Include="Views\Researches\Index.cshtml" />
     <Content Include="Views\Researches\pacientDetails.cshtml" />
-    <Content Include="Views\Assigments\Create.cshtml" />
-    <Content Include="Views\Assigments\Delete.cshtml" />
-    <Content Include="Views\Assigments\Details.cshtml" />
-    <Content Include="Views\Assigments\Edit.cshtml" />
-    <Content Include="Views\Assigments\Index.cshtml" />
     <Content Include="Views\Assigments\pacientDetails.cshtml" />
-    <Content Include="Views\Neurostatus\Create.cshtml" />
-    <Content Include="Views\Neurostatus\Delete.cshtml" />
-    <Content Include="Views\Neurostatus\Details.cshtml" />
-    <Content Include="Views\Neurostatus\Edit.cshtml" />
-    <Content Include="Views\Neurostatus\Index.cshtml" />
     <Content Include="Views\Neurostatus\pacientDetails.cshtml" />
-    <Content Include="Views\Reviews\Create.cshtml" />
-    <Content Include="Views\Reviews\Delete.cshtml" />
-    <Content Include="Views\Reviews\Details.cshtml" />
-    <Content Include="Views\Reviews\Edit.cshtml" />
-    <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Reviews\pacientDetails.cshtml" />
     <Content Include="Views\Pacients\visitsView.cshtml" />
     <Content Include="Views\Reviews\pacientEdit.cshtml" />
@@ -515,11 +494,6 @@
     <Content Include="Views\Assigments\pacientEdit.cshtml" />
     <Content Include="Views\Diagnoses\pacientEdit.cshtml" />
     <Content Include="Views\Neurostatus\pacientEdit.cshtml" />
-    <Content Include="Views\Syndromes\Create.cshtml" />
-    <Content Include="Views\Syndromes\Delete.cshtml" />
-    <Content Include="Views\Syndromes\Details.cshtml" />
-    <Content Include="Views\Syndromes\Edit.cshtml" />
-    <Content Include="Views\Syndromes\Index.cshtml" />
     <Content Include="Views\Syndromes\pacientDetails.cshtml" />
     <Content Include="Views\Syndromes\pacientEdit.cshtml" />
     <Content Include="Views\Researches\pacientEdit.cshtml" />
@@ -554,6 +528,17 @@
     <Content Include="Views\Pacients\reviewList.cshtml" />
     <Content Include="Views\Assigments\pacientCancel.cshtml" />
     <Content Include="Views\Reviews\pacientDelete.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Pacients\Edit.cshtml" />
+    <Content Include="Views\Pacients\Create.cshtml" />
+    <Content Include="Views\Pacients\Delete.cshtml" />
+    <Content Include="Views\Doctors\Create.cshtml" />
+    <Content Include="Views\Doctors\Delete.cshtml" />
+    <Content Include="Views\Doctors\Details.cshtml" />
+    <Content Include="Views\Doctors\Edit.cshtml" />
+    <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\Pacients\PersonalData.cshtml" />
+    <Content Include="Views\Assigments\pacientDetailsCube.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

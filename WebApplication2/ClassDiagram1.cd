@@ -1,60 +1,151 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="WebApplication2.Models.Inspection" Collapsed="true">
-    <Position X="4" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAgAAAQAAAAA=</HashCode>
-      <FileName>Models\Pacient.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebApplication2.Models.Monitoring" Collapsed="true">
-    <Position X="2.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAgAAAAAAAAAAAAAABAAAAAgAAAQAAAAA=</HashCode>
-      <FileName>Models\Pacient.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebApplication2.Models.Diagnosis" Collapsed="true">
-    <Position X="2.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Pacient.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebApplication2.Models.Medicine" Collapsed="true">
-    <Position X="0.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ACAAAAQAAAAAgAAAIAAACAAAAAAEEAAAAAAIAgAAAAA=</HashCode>
-      <FileName>Models\Pacient.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="WebApplication2.Models.Appointment" Collapsed="true">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="WebApplication2.Models.PacientDBContext">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAoAAAAQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAIQAAgwABAIAAAEAAECACAIAEAAAAABAIAEAAAQAE=</HashCode>
       <FileName>Models\Pacient.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebApplication2.Models.Treatment" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+  <Class Name="WebApplication2.Models.AnamnesisEventType">
+    <Position X="11.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAgAAQICAAAAAAAAAEAAgAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Pacient.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebApplication2.Models.Pacient" Collapsed="true">
-    <Position X="4" Y="1.5" Width="1.5" />
+  <Class Name="WebApplication2.Models.DebutType">
+    <Position X="4.5" Y="7" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACBAgQAQAAwAAAgABAAAACEoCABACAAAAAE=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Pacient.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WebApplication2.Models.PacientDBContext" Collapsed="true">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+  <Class Name="WebApplication2.Models.DiagnosisType">
+    <Position X="9.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQABAAAAAAAAAAAAEAAAAAAAAAAABAAAAgAASAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Pacient.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="WebApplication2.Models.ResearchType">
+    <Position X="4.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.MedicineType">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.NeuroStatusType">
+    <Position X="2.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Medicine">
+    <Position X="12.75" Y="2.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAgAAAIAAAAAAAAAAFAAAAAAAIAgAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.SyndromeType">
+    <Position X="2.25" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.AssigmentType">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.VisitDate">
+    <Position X="18" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAIAQAAAgAAAAABAAACAIAAAAAAAAAAAEQAAQAE=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Anamnesis">
+    <Position X="11.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Debut">
+    <Position X="4.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAkAAAAAABAgAAAIAAAAAAAAAQBAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Diagnosis">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Research">
+    <Position X="4.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAIAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Assigment">
+    <Position X="6.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAoABAAQAAAgAAAAAAAAAAAAAABEAAgQAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Neurostatus">
+    <Position X="2.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAIAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Review">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Syndrome">
+    <Position X="2.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAkAAAAAABAgAAAAAAAAAAAAAQBAAAAgAAQAAAAAQA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebApplication2.Models.Pacient">
+    <Position X="16.25" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAACBAgAAAAAwEAAgABAAEAAEoAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="WebApplication2.Models.Sex">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBoCAAA=</HashCode>
+      <FileName>Models\Pacient.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -11,6 +11,11 @@ namespace WebApplication2.Models
         public VisitDate visit { get; set; }
         public bool add { get; set; }
     }
+    public class newPacient
+    {
+        public Pacient pacient { get; set; }
+        public List<Doctor> doctors;
+    }
     public class newReview
     {
         public Review review { get; set; }
