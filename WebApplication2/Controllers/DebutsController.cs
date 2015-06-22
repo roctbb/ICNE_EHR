@@ -11,50 +11,50 @@ using WebApplication2.Models;
 namespace WebApplication2.Controllers
 {
     [Authorize]
-    public class AssigmentsController : Controller 
+    public class DebutsController : Controller
     {
         private PacientDBContext db = new PacientDBContext();
 
-        // GET: Assigments
+        // GET: Debuts
         public ActionResult Index()
         {
-            return View(db.assigments.ToList());
+            return View(db.debutes.ToList());
         }
 
-        // GET: Assigments/Details/5
+        // GET: Debuts/Details/5
         public ActionResult pacientDetails(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assigment assigment = db.assigments.Include(p => p.type).Where(p => p.ID == id).First();
-            if (assigment == null)
+            Debut debut = db.debutes.Include(d=>d.type).Where(d=>d.ID == id).First();
+            if (debut == null)
             {
                 return HttpNotFound();
             }
-            return PartialView("~/views/Assigments/pacientDetails.cshtml", assigment);
+            return PartialView("~/views/Debuts/pacientDetails.cshtml", debut);
         }
 
-        // GET: Assigments/Create
+        // GET: Debuts/Create
         public ActionResult pacientCreate(int visitID, int num)
         {
-            newAssigment na = new newAssigment();
+            newDebut na = new newDebut();
             na.visitID = visitID;
             na.num = num;
-            na.assigment = new Assigment();
-            na.eventTypes = db.assigmentTypes.ToList();
+            na.debut = new Debut();
+            na.eventTypes = db.debuteTypes.ToList();
             return PartialView(na);
         }
 
-        // POST: Assigments/Create
+        // POST: Debuts/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(newAssigment data)
+        public ActionResult Create(newDebut data)
         {
-            VisitDate visit = db.visits.Include(v => v.assigments).Where(v => v.ID == data.visitID).First();
+            VisitDate visit = db.visits.Include(v => v.debutes).Where(v => v.ID == data.visitID).First();
 
             if (visit == null)
                 return RedirectToAction("Index", "Pacients");
@@ -65,94 +65,74 @@ namespace WebApplication2.Controllers
 
             if (ModelState.IsValid)
             {
-                AssigmentType type = db.assigmentTypes.Where(a => a.ID == data.assigment.type.ID).First();
-                data.assigment.type = type;
-                data.assigment.cancelDate = DateTime.Today;
-                visit.assigments.Add(data.assigment);
+                DebutType type = db.debuteTypes.Where(a => a.ID == data.debut.type.ID).First();
+                data.debut.type = type;
+                visit.debutes.Add(data.debut);
 
                 db.SaveChanges();
-                return PartialView("/views/Assigments/pacientDetails.cshtml", data.assigment);
+                return PartialView("/views/Debuts/pacientDetails.cshtml", data.debut);
             }
-            return PartialView("/views/Assigments/pacientCreate.cshtml", data);
+            return PartialView("/views/Debuts/pacientCreate.cshtml", data);
 
         }
 
-        // GET: Assigments/Edit/5
+        // GET: Debuts/Edit/5
         public ActionResult pacientEdit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assigment assigment = db.assigments.Include(p => p.type).Where(p => p.ID == id).First();
-            if (assigment == null)
+            Debut debut = db.debutes.Include(d => d.type).Where(d => d.ID == id).First();
+            if (debut == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(assigment);
+            return PartialView(debut);
         }
 
-        // POST: Assigments/Edit/5
+        // POST: Debuts/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult pacientEdit([Bind(Include = "ID,comments,medicine,cancelDate,actual,weight,dose,inADay")]Assigment assigment)
+        public ActionResult pacientEdit([Bind(Include = "ID,comments,description,month,year,minutes,seconds")] Debut debut)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(assigment).State = EntityState.Modified;
-
+                db.Entry(debut).State = EntityState.Modified;
                 db.SaveChanges();
-                return pacientDetails(assigment.ID);
-                //return (new AssigmentsController()).pacientDetails(assigment.ID);
+                return pacientDetails(debut.ID);
             }
-            return PartialView(assigment);
+            return View(debut);
         }
 
-        // GET: Assigments/Delete/5
+        // GET: Debuts/Delete/5
         public ActionResult pacientDelete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assigment assigment = db.assigments.Find(id);
-            if (assigment == null)
+            Debut debut = db.debutes.Find(id);
+            if (debut == null)
             {
                 return HttpNotFound();
             }
             //Debut Debut = db.anamneses.Find(id);
-            db.assigments.Remove(assigment);
+            db.debutes.Remove(debut);
             db.SaveChanges();
             //return View(Debut);
             return PartialView();
         }
-        public ActionResult pacientCancel(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Assigment assigment = db.assigments.Find(id);
-            if (assigment == null)
-            {
-                return HttpNotFound();
-            }
-            //Debut Debut = db.anamneses.Find(id);
-            assigment.actual = 1;
-            assigment.cancelDate = DateTime.Today;
-            db.SaveChanges();
-            //return View(Debut);
-            return PartialView();
-        }
-        // POST: Assigments/Delete/5
+
+        // POST: Debuts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Assigment assigment = db.assigments.Find(id);
-            db.assigments.Remove(assigment);
+            Debut debut = db.debutes.Find(id);
+            db.debutes.Remove(debut);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
