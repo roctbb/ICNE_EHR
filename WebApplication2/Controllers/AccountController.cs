@@ -390,7 +390,7 @@ namespace WebApplication2.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Pacient");
+            return RedirectToAction("Index", "Pacients");
         }
 
         //
