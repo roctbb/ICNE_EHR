@@ -97,15 +97,15 @@ namespace WebApplication2.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult pacientEdit(Assigment assigment)
+        public ActionResult pacientEdit([Bind(Include = "ID,comments,medicine,cancelDate,actual,weight,dose,inADay")]Assigment assigment)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(assigment).State = EntityState.Modified;
 
                 db.SaveChanges();
-                //return pacientDetails(assigment.ID);
-                return (new AssigmentsController()).pacientDetails(assigment.ID);
+                return pacientDetails(assigment.ID);
+                //return (new AssigmentsController()).pacientDetails(assigment.ID);
             }
             return PartialView(assigment);
         }
