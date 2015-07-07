@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -21,6 +23,11 @@ namespace WebApplication2.Models
         public Review review { get; set; }
         public int visitID { get; set; }
         public int? num { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newAnamnesis
@@ -29,6 +36,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<AnamnesisEventType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newDiagnosis
@@ -36,7 +48,13 @@ namespace WebApplication2.Models
         public Diagnosis diagnosis { get; set; }
         public int visitID { get; set; }
         public int? num { get; set; }
+
         public List<DiagnosisType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newDebut
@@ -45,6 +63,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<DebutType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newSyndrome
@@ -53,6 +76,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<SyndromeType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newResearch
@@ -61,6 +89,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<ResearchType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newAssigment
@@ -69,6 +102,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<AssigmentType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
     public class newNeurostatus
@@ -77,6 +115,11 @@ namespace WebApplication2.Models
         public int visitID { get; set; }
         public int? num { get; set; }
         public List<NeuroStatusType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
 
     }
 

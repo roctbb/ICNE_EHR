@@ -11,7 +11,54 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     @RenderSection("scripts", required: false)
-    <script src="@Url.Content("~/Scripts/tinymce/tiny_mce.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tinymce/tinymce.min.js")" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+    function initMCE() {
+
+        tinyMCE.init({
+
+            // General options
+            mode : "specific_textareas",
+            editor_selector : "mceEditor",
+            //theme: "advanced",
+            //height: "500",
+            height: 300,
+            statusbar: false,
+            menubar: false,
+
+            setup: function (ed) {
+                ed.on('init', function () {
+                    this.getDoc().body.style.fontSize = '14px';
+                    this.getDoc().body.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+                });
+            },
+
+            paste_data_images: true,
+
+            plugins: [
+                "advlist autolink lists link base64_image charmap hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons textcolor colorpicker textpattern "
+            ],
+            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link base64_image media | forecolor backcolor",
+            //content_css : "@Url.Content("~/Scripts/tinymce/css/content.css")",
+            convert_urls : false,
+
+		    // Drop lists for link/image/media/template dialogs
+		    template_external_list_url : "lists/template_list.js",
+		    external_link_list_url : "lists/link_list.js",
+		    external_image_list_url : "lists/image_list.js",
+		    media_external_list_url : "lists/media_list.js",
+
+	    });
+
+    }
+
+    </script>
+
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">

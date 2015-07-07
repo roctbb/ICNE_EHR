@@ -35,7 +35,45 @@ namespace WebApplication2.Controllers
             }
             return PartialView("~/views/Diagnoses/pacientDetails.cshtml", diagnosis);
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newDiagnosis na = new newDiagnosis();
+            na.diagnosis = new Diagnosis();
+            na.eventTypes = db.diagnosisTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newDiagnosis data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v => v.diagnoses)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                DiagnosisType type = db.diagnosisTypes.Where(a => a.ID == data.diagnosis.type.ID).First();
+                data.diagnosis.type = type;
+                visit.diagnoses.Add(data.diagnosis);
+                db.SaveChanges();
+                return PartialView("/views/Diagnoses/pacientDetails.cshtml", data.diagnosis);
+            }
+            else
+            {
+                DiagnosisType type = db.diagnosisTypes.Where(a => a.ID == data.diagnosis.type.ID).First();
+                data.diagnosis.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.diagnoses = new List<Diagnosis>();
+                visit.diagnoses.Add(data.diagnosis);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Diagnoses/pacientDetails.cshtml", data.diagnosis);
 
+            }
+            //return PartialView("/views/Diagnosis/pacientCreate.cshtml", data);
+
+        }
         // GET: Diagnoses/Create
         public ActionResult pacientCreate(int visitID, int num)
         {

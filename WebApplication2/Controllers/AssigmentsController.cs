@@ -76,7 +76,46 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Assigments/pacientCreate.cshtml", data);
 
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newAssigment na = new newAssigment();
+            na.assigment = new Assigment();
+            na.eventTypes = db.assigmentTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newAssigment data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v => v.assigments)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            data.assigment.cancelDate = data.initialDate;
+            if (visit != null)
+            {
+                AssigmentType type = db.assigmentTypes.Where(a => a.ID == data.assigment.type.ID).First();
+                data.assigment.type = type;
+                visit.assigments.Add(data.assigment);
+                db.SaveChanges();
+                return PartialView("/views/Assigments/pacientDetails.cshtml", data.assigment);
+            }
+            else
+            {
+                AssigmentType type = db.assigmentTypes.Where(a => a.ID == data.assigment.type.ID).First();
+                data.assigment.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.assigments = new List<Assigment>();
+                visit.assigments.Add(data.assigment);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Assigments/pacientDetails.cshtml", data.assigment);
 
+            }
+            //return PartialView("/views/Assigment/pacientCreate.cshtml", data);
+
+        }
         // GET: Assigments/Edit/5
         public ActionResult pacientEdit(int? id)
         {

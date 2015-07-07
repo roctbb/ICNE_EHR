@@ -6,6 +6,7 @@
 <div class="bs-callout bs-callout-success">
     <h5>Дебют</h5>
     <p>&nbsp;</p>
+    @Html.Action("pacientCreateByDate", "Debuts", new { id = Model.ID })
     <div class="tabContent">
         @foreach (var visit in Model.visits)
         {

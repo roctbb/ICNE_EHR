@@ -227,7 +227,7 @@ namespace WebApplication2.Models
         [DisplayName("Текст")]
         [DataType(DataType.Html)]
         [AllowHtml]
-        [UIHint("tinymce_full")]
+
         public String comments { get; set; }
     }
     public class Syndrome
@@ -288,6 +288,7 @@ namespace WebApplication2.Models
     {
         public int ID { get; set; }
         [DisplayName("Лечащий врач")]
+        
         public Doctor doctor { get; set; }
         [DisplayName("ФИО")]
         public String name { get; set; }

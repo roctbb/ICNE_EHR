@@ -12,7 +12,7 @@
         
             
             <div class="col-md-10">
-                @Html.EditorFor(model => model.review.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.review.comments, new { @class = "form-control mceEditor", id = "NewReviewText" })
                 @Html.ValidationMessageFor(model => model.review.comments, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2">
@@ -20,5 +20,6 @@
 
             </div>
     </div>
+    <script>initMCE(); tinyMCE.EditorManager.execCommand('mceAddEditor', false, 'NewReviewText');</script>
     <hr>
 }

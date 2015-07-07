@@ -15,7 +15,11 @@
             $("#" + controller + "Tab").find('.' + controller + 'Div' + id).load('/' + controller + '/pacientCancel/' + id);
         }
     }
-    function CancelEdit(controller, id) {
+    function CancelEdit(controller, id, mce) {
+        if (mce==true)
+        {
+            tinyMCE.EditorManager.execCommand('mceRemoveEditor', true, controller + 'Text' + id);
+        }
         $.get('/' + controller + '/pacientDetails/' + id, function (data) {
             res = $.parseHTML('<div>' + data + '</div>');
             if ($(res).find('.' + controller + 'Div' + id).html() != "") {
@@ -44,7 +48,10 @@
         
     }
     function PostEditForm(controller, id, mce) {
-        if (mce == true) tinyMCE.triggerSave();
+        if (mce == true) {
+            tinyMCE.triggerSave();
+            tinyMCE.EditorManager.execCommand('mceRemoveEditor', true, controller + 'Text' + id);
+        }
         $.ajax({
             type: "POST",
             url: '/' + controller + '/pacientEdit/' + id,
@@ -64,6 +71,20 @@
         });
 
     }
+    function PostDateCreateForm(controller, id, mce) {
+        if (mce == true) tinyMCE.triggerSave();
+        $.ajax({
+            type: "POST",
+            url: '/' + controller + '/CreateByDate/',
+            data: $('#' + controller + 'DateCreate').serialize(), // serializes the form's elements.
+            success: function (data) {
+                res = $.parseHTML('<div><div>' + data + '</div></div>');
+                $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
+                $('#' + controller + 'DateCreate').trigger('reset');
+            }
+        });
+
+    }
     function PostCreateForm(controller, num, mce) {
         if (mce == true) tinyMCE.triggerSave();
         $.ajax({
@@ -73,7 +94,7 @@
             success: function (data) {
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
                 $('#documentData' + num).prepend($(res).find('div').first().html());
-                $('#' + controller + 'Tab').find('.tabContent').prepend($(res).find('div').first().html());
+                $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
                 $('#' + controller + 'Create').trigger('reset');
             }
         });

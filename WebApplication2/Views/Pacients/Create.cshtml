@@ -13,9 +13,7 @@
     <div class="col-md-6">
         <h2>Добавление пациента</h2>
     </div>
-    <div class="col-md-6"><button value="Create" class="btn btn-success pull-right" style="margin-top: 20px; margin-right: 20px;">
-    <span class="glyphicon glyphicon-plus"></span>Добавить</button>
-    </div>
+
 </div>
         <div class="form-horizontal">
 
@@ -102,7 +100,10 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <button value="Create" class="btn btn-success">
+                        Добавить
+                    </button>
+                    @Html.ActionLink("Назад", "Index", "Pacients", new { }, new { @class="btn btn-default"})
                 </div>
             </div>
         </div>

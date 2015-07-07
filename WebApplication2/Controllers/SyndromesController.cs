@@ -71,7 +71,45 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Syndromes/pacientCreate.cshtml", data);
 
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newSyndrome na = new newSyndrome();
+            na.syndrome = new Syndrome();
+            na.eventTypes = db.syndromeTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newSyndrome data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v => v.syndromes)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                SyndromeType type = db.syndromeTypes.Where(a => a.ID == data.syndrome.type.ID).First();
+                data.syndrome.type = type;
+                visit.syndromes.Add(data.syndrome);
+                db.SaveChanges();
+                return PartialView("/views/Syndromes/pacientDetails.cshtml", data.syndrome);
+            }
+            else
+            {
+                SyndromeType type = db.syndromeTypes.Where(a => a.ID == data.syndrome.type.ID).First();
+                data.syndrome.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.syndromes = new List<Syndrome>();
+                visit.syndromes.Add(data.syndrome);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Syndromes/pacientDetails.cshtml", data.syndrome);
 
+            }
+            //return PartialView("/views/Syndrome/pacientCreate.cshtml", data);
+
+        }
 
         // GET: Syndromes/Edit/5
         public ActionResult pacientEdit(int? id)

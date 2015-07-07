@@ -71,7 +71,40 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Reviews/pacientCreate.cshtml", data);
 
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newReview na = new newReview();
+            na.review = new Review();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newReview data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v => v.reviews)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                visit.reviews.Add(data.review);
+                db.SaveChanges();
+                return PartialView("/views/Reviews/pacientDetails.cshtml", data.review);
+            }
+            else
+            {
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.reviews = new List<Review>();
+                visit.reviews.Add(data.review);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Reviews/pacientDetails.cshtml", data.review);
 
+            }
+            //return PartialView("/views/Review/pacientCreate.cshtml", data);
+
+        }
         // GET: Reviews/Edit/5
         public ActionResult pacientEdit(int? id)
         {

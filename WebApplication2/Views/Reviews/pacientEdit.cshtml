@@ -6,11 +6,12 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="row">
         <div class="col-md-10">
-                    @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                   
+                    @Html.TextAreaFor(model => model.comments, new { @class = "form-control mceEditor", id= String.Format("ReviewsText{0}", Model.ID) })
                     @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
         </div>
                 <div class="col-md-2">
-                    <a class="btn btn-sm btn-warning" onclick="CancelEdit('Reviews', @Model.ID);">
+                    <a class="btn btn-sm btn-warning" onclick="CancelEdit('Reviews', @Model.ID, true);">
                         <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
                     </a>
                     <a class="btn btn-sm btn-primary" onclick="PostEditForm('Reviews', @Model.ID, true);">
@@ -19,3 +20,5 @@
                 </div>
        </div>
 </form>
+<script>initMCE(); tinyMCE.EditorManager.execCommand('mceAddEditor', true, '@String.Format("ReviewsText{0}", Model.ID)');</script>
+

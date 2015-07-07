@@ -75,7 +75,45 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Neurostatus/pacientCreate.cshtml", data);
 
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newNeurostatus na = new newNeurostatus();
+            na.neurostatus = new Neurostatus();
+            na.eventTypes = db.neuroStatusTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newNeurostatus data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v => v.neurostatuses)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                NeuroStatusType type = db.neuroStatusTypes.Where(a => a.ID == data.neurostatus.type.ID).First();
+                data.neurostatus.type = type;
+                visit.neurostatuses.Add(data.neurostatus);
+                db.SaveChanges();
+                return PartialView("/views/Neurostatus/pacientDetails.cshtml", data.neurostatus);
+            }
+            else
+            {
+                NeuroStatusType type = db.neuroStatusTypes.Where(a => a.ID == data.neurostatus.type.ID).First();
+                data.neurostatus.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.neurostatuses = new List<Neurostatus>();
+                visit.neurostatuses.Add(data.neurostatus);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Neurostatus/pacientDetails.cshtml", data.neurostatus);
 
+            }
+            //return PartialView("/views/Assigment/pacientCreate.cshtml", data);
+
+        }
         // GET: Neurostatus/Edit/5
         public ActionResult pacientEdit(int? id)
         {

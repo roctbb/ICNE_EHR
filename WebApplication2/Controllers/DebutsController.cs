@@ -75,7 +75,45 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Debuts/pacientCreate.cshtml", data);
 
         }
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newDebut na = new newDebut();
+            na.debut = new Debut();
+            na.eventTypes = db.debuteTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newDebut data)
+        {
+            Pacient pacient = db.pacients.Include(p => p.visits.Select(v=>v.debutes)).Include(p => p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                DebutType type = db.debuteTypes.Where(a => a.ID == data.debut.type.ID).First();
+                data.debut.type = type;
+                visit.debutes.Add(data.debut);
+                db.SaveChanges();
+                return PartialView("/views/Debuts/pacientDetails.cshtml", data.debut);
+            }
+            else
+            {
+                DebutType type = db.debuteTypes.Where(a => a.ID == data.debut.type.ID).First();
+                data.debut.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.debutes = new List<Debut>();
+                visit.debutes.Add(data.debut);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Debuts/pacientDetails.cshtml", data.debut);
 
+            }
+            //return PartialView("/views/Debut/pacientCreate.cshtml", data);
+
+        }
         // GET: Debuts/Edit/5
         public ActionResult pacientEdit(int? id)
         {

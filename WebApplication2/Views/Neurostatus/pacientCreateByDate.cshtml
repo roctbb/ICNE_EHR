@@ -1,0 +1,41 @@
+﻿
+@model WebApplication2.Models.newNeurostatus
+@using WebApplication2.Models
+@using (Html.BeginForm("Create", "Neurostatus", FormMethod.Post, new { id = "NeurostatusDateCreate" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.visitID)
+    @Html.HiddenFor(model => model.num)
+    @Html.HiddenFor(model => model.pacientID)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-4">
+                <strong>
+                    @Html.DropDownListFor(model => model.neurostatus.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
+                </strong>
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-2">
+                <a onclick="PostDateCreateForm('Neurostatus', @Model.pacientID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
+            </div>
+            <div class="col-md-6 col-md-offset-4">
+                @Html.EditorFor(model => model.neurostatus.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.neurostatus.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-6  alert alert-info">
+                <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @Html.DisplayNameFor(model => model.neurostatus.comments):</h4>
+                @Html.EditorFor(model => model.neurostatus.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.neurostatus.comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}

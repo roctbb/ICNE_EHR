@@ -539,6 +539,15 @@
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Pacients\PersonalData.cshtml" />
     <Content Include="Views\Assigments\pacientDetailsCube.cshtml" />
+    <Content Include="Views\Anamnesis\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Assigments\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Debuts\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Diagnoses\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Neurostatus\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Researches\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Reviews\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Shared\tinymce_full.cshtml" />
+    <Content Include="Views\Syndromes\pacientCreateByDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

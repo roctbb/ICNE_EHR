@@ -46,6 +46,7 @@ namespace WebApplication2.Controllers
             na.eventTypes = db.anamnesisTypes.ToList();
             return PartialView(na);
         }
+        
         public ActionResult Create(newAnamnesis data)
         {
             VisitDate visit = db.visits.Include(v => v.anamnesis).Where(v => v.ID == data.visitID).First();
@@ -69,7 +70,46 @@ namespace WebApplication2.Controllers
             return PartialView("/views/Anamnesis/pacientCreate.cshtml", data);
 
         }
-        
+        public ActionResult pacientCreateByDate(int id)
+        {
+            newAnamnesis na = new newAnamnesis();
+            na.anamnesis = new Anamnesis();
+            na.eventTypes = db.anamnesisTypes.ToList();
+            na.pacientID = id;
+            return PartialView(na);
+        }
+        public ActionResult CreateByDate(newAnamnesis data)
+        {
+            Pacient pacient = db.pacients.Include(p=>p.visits.Select(v => v.anamnesis)).Include(p=>p.doctor).Where(p => p.ID == data.pacientID).First();
+            if (pacient == null)
+                return RedirectToAction("Index", "Pacients");
+            VisitDate visit = pacient.visits.Where(v => v.date == data.initialDate).FirstOrDefault();
+            if (visit != null)
+            {
+                AnamnesisEventType type = db.anamnesisTypes.Where(a => a.ID == data.anamnesis.type.ID).First();
+                data.anamnesis.type = type;
+                visit.anamnesis.Add(data.anamnesis);
+                db.SaveChanges();
+                return PartialView("/views/Anamnesis/pacientDetails.cshtml", data.anamnesis);
+            }
+            else
+            {
+                AnamnesisEventType type = db.anamnesisTypes.Where(a => a.ID == data.anamnesis.type.ID).First();
+                data.anamnesis.type = type;
+                visit = new VisitDate();
+                visit.doctorID = pacient.doctor.ID;
+                visit.date = data.initialDate;
+                visit.anamnesis = new List<Anamnesis>();
+                visit.anamnesis.Add(data.anamnesis);
+                pacient.visits.Add(visit);
+                db.SaveChanges();
+                return PartialView("/views/Anamnesis/pacientDetails.cshtml", data.anamnesis);
+
+            }
+            //return PartialView("/views/Anamnesis/pacientCreate.cshtml", data);
+
+        }
+
 
         // GET: Anamnesis/Edit/5
         public ActionResult pacientEdit(int? id)
