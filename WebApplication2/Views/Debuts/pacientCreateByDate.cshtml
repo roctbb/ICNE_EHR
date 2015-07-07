@@ -12,22 +12,26 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="">
             <div class="row">
-                <div class="col-md-4">
-                    <strong>
-                        @Html.DropDownListFor(model => model.debut.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
-                    </strong>
-                </div>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="col-md-2">
-                    <a onclick="PostDateCreateForm('Debuts', @Model.pacientID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <strong>
+                            @Html.DropDownListFor(model => model.debut.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-2">
+                        <a onclick="PostDateCreateForm('Debuts', @Model.pacientID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 
+                    </div>
                 </div>
-                <div class="col-md-6 col-md-offset-4">
-                    <p>
-                        @Html.EditorFor(model => model.debut.description, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.debut.description) } })
-                    </p>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <p>
+                            @Html.EditorFor(model => model.debut.description, new { htmlAttributes = new { @class = "form-control", @placeholder = Html.DisplayNameFor(model => model.debut.description) } })
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="row alert alert-info" style="margin-top:10px">

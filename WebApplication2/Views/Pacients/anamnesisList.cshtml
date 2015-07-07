@@ -1,14 +1,17 @@
 ﻿
 @model WebApplication2.Models.Pacient
 @using WebApplication2.Models
-
-
-<div class="bs-callout bs-callout-success">
-        <h5>Сводный анамнез</h5>
-        <p>&nbsp;</p>
+<div class="bs-callout bs-callout-primary">
+    <h5>Добавить данные</h5>
+    <p>&nbsp;</p>
     @Html.Action("pacientCreateByDate", "Anamnesis", new { id = Model.ID })
+</div>
+<div class="bs-callout bs-callout-success">
+    <h5>Сводный анамнез</h5>
+    <p>&nbsp;</p>
+
     <div class="tabContent">
-        
+
         @foreach (var visit in Model.visits)
         {
             foreach (var anamnes in visit.anamnesis)
@@ -16,5 +19,5 @@
                 @Html.Partial("~/Views/Anamnesis/pacientDetails.cshtml", anamnes)
             }
         }
-        </div>
     </div>
+</div>

@@ -11,20 +11,23 @@
 
 
 
+        <div class="form-group">
+            <div class="col-md-4">
+                @Html.DisplayNameFor(model => model.initialDate)
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-2">
+                <a onclick="PostDateCreateForm('Reviews', @Model.pacientID, true)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 
-        <div class="col-md-4">
-            @Html.DisplayNameFor(model => model.initialDate)
+            </div>
         </div>
-        <div class="col-md-6">
-            @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-        <div class="col-md-2">
-            <a onclick="PostDateCreateForm('Reviews', @Model.pacientID, true)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-
-        </div>
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.review.comments, new { @class = "form-control mceEditor", id = "NewReviewText" })
-            @Html.ValidationMessageFor(model => model.review.comments, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.review.comments, new { @class = "form-control mceEditor", id = "NewReviewText" })
+                @Html.ValidationMessageFor(model => model.review.comments, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
     <script>initMCE(); tinyMCE.execCommand('mceAddControl', false, 'NewReviewText');</script>

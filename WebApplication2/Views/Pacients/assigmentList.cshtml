@@ -1,11 +1,15 @@
 ﻿@model WebApplication2.Models.Pacient
 @using WebApplication2.Models
 
-
+<div class="bs-callout bs-callout-primary">
+    <h5>Добавить данные</h5>
+    <p>&nbsp;</p>
+    @Html.Action("pacientCreateByDate", "Assigments", new { id = Model.ID })
+</div>
 <div class="bs-callout bs-callout-success">
     <h5>Назначения</h5>
     <p>&nbsp;</p>
-    @Html.Action("pacientCreateByDate", "Assigments", new { id = Model.ID })
+    
     <div class="tabContent">
         @foreach (var visit in Model.visits)
         {

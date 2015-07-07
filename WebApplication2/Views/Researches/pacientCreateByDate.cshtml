@@ -10,21 +10,25 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
-            <div class="col-md-4">
-                <strong>
-                    @Html.DropDownListFor(model => model.research.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
-                </strong>
-            </div>
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-            <div class="col-md-2">
-                <a onclick="PostDateCreateForm('Researches', @Model.pacientID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+            <div class="form-group">
+                <div class="col-md-4">
+                    <strong>
+                        @Html.DropDownListFor(model => model.research.type.ID, new SelectList(Model.eventTypes, "ID", "name"), new { @class = "form-control" })
+                    </strong>
+                </div>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.initialDate, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-md-2">
+                    <a onclick="PostDateCreateForm('Researches', @Model.pacientID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 
+                </div>
             </div>
-            <div class="col-md-6 col-md-offset-4">
-                @Html.EditorFor(model => model.research.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.research.description, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    @Html.EditorFor(model => model.research.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.research.description, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
         <div class="row" style="margin-top:10px">
