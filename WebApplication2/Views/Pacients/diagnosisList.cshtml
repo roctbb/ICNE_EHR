@@ -13,6 +13,7 @@
     <div class="tabContent">
         @foreach (var visit in Model.visits)
         {
+            visit.diagnoses.Sort(delegate (Diagnosis t1, Diagnosis t2) { return t2.ID.CompareTo(t1.ID); });
             foreach (var anamnes in visit.diagnoses)
             {
                 @Html.Partial("~/Views/Diagnoses/pacientDetails.cshtml", anamnes)

@@ -41,7 +41,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.birthday)
+            @Model.birthday.Day.@Model.birthday.Month.@Model.birthday.Year
+            
         </dd>
 
         <dt>

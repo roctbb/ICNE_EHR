@@ -12,8 +12,10 @@
     <p>&nbsp;</p>
     
     <div class="tabContent">
+
         @foreach (var visit in Model.visits)
         {
+            visit.reviews.Sort(delegate (Review t1, Review t2) { return t2.ID.CompareTo(t1.ID); });
             foreach (var anamnes in visit.reviews)
             {
                 @Html.Partial("~/Views/Reviews/pacientDetails.cshtml", anamnes)

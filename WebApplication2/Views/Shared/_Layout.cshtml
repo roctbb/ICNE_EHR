@@ -22,36 +22,34 @@
             // General options
             mode : "specific_textareas",
             editor_selector : "mceEditor",
-            //theme: "advanced",
-            //height: "500",
             height: 300,
-            statusbar: false,
-            menubar: false,
+		    plugins: [
+                "advlist autolink autosave base64_image link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+		    ],
 
-            setup: function (ed) {
-                ed.on('init', function () {
-                    this.getDoc().body.style.fontSize = '14px';
-                    this.getDoc().body.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-                });
-            },
+		    toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+		    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+		    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft base64_image",
 
-            paste_data_images: true,
+		    menubar: false,
+		    toolbar_items_size: 'small',
 
-            plugins: [
-                "advlist autolink lists link base64_image charmap hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code",
-                "insertdatetime media nonbreaking save table contextmenu directionality",
-                "emoticons textcolor colorpicker textpattern "
-            ],
-            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link base64_image media | forecolor backcolor",
-            //content_css : "@Url.Content("~/Scripts/tinymce/css/content.css")",
-            convert_urls : false,
+		    style_formats: [
+                    { title: 'Bold text', inline: 'b' },
+                    { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
+                    { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
+                    { title: 'Example 1', inline: 'span', classes: 'example1' },
+                    { title: 'Example 2', inline: 'span', classes: 'example2' },
+                    { title: 'Table styles' },
+                    { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
+		    ],
 
-		    // Drop lists for link/image/media/template dialogs
-		    template_external_list_url : "lists/template_list.js",
-		    external_link_list_url : "lists/link_list.js",
-		    external_image_list_url : "lists/image_list.js",
-		    media_external_list_url : "lists/media_list.js",
+		    templates: [
+                    { title: 'Test template 1', content: 'Test 1' },
+                    { title: 'Test template 2', content: 'Test 2' }
+		    ]
 
 	    });
 
