@@ -29,6 +29,11 @@ namespace WebApplication2.Models
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
 
+        public newReview()
+        {
+            initialDate = DateTime.Today;
+        }
+
     }
     public class newAnamnesis
     {
@@ -41,6 +46,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newAnamnesis()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newDiagnosis
@@ -55,6 +64,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newDiagnosis()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newDebut
@@ -68,6 +81,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newDebut()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newSyndrome
@@ -81,6 +98,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newSyndrome()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newResearch
@@ -94,6 +115,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newResearch()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newAssigment
@@ -107,6 +132,10 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newAssigment()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
     public class newNeurostatus
@@ -120,6 +149,27 @@ namespace WebApplication2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime initialDate { get; set; }
         public int pacientID { get; set; }
+        public newNeurostatus()
+        {
+            initialDate = DateTime.Today;
+        }
+
+    }
+    public class newAnalysis
+    {
+        public Analysis analysis { get; set; }
+        public int visitID { get; set; }
+        public int? num { get; set; }
+        public List<AnalysisType> eventTypes { get; set; }
+        [DisplayName("Дата приема")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime initialDate { get; set; }
+        public int pacientID { get; set; }
+        public newAnalysis()
+        {
+            initialDate = DateTime.Today;
+        }
 
     }
 

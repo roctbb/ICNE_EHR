@@ -9,7 +9,15 @@
         </a>
             
     </div>
-    <div class="col-md-6"><h2>@Html.DisplayFor(model => model.name)</h2>
+    @{
+        var today = DateTime.Today;
+
+        var a = (today.Year * 100 + today.Month) * 100 + today.Day;
+        var b = (Model.birthday.Year * 100 + Model.birthday.Month) * 100 + Model.birthday.Day;
+
+        var age = (a - b) / 10000;
+    }
+    <div class="col-md-6"><h2>@Html.DisplayFor(model => model.name) (@Model.birthday.Date.ToShortDateString(), @age лет)</h2>
 
 
     <h4>@Html.DisplayNameFor(model => model.doctor): @Html.DisplayFor(model => model.doctor.name)</h4>

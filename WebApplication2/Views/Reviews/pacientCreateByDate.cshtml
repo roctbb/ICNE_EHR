@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-10">
+            <div class="col-md-11">
                 @Html.TextAreaFor(model => model.review.comments, new { @class = "form-control mceEditor", id = "NewReviewText" })
                 @Html.ValidationMessageFor(model => model.review.comments, "", new { @class = "text-danger" })
             </div>

@@ -1,0 +1,35 @@
+﻿@model WebApplication2.Models.Analysis
+
+<div class="@String.Format("AnalysesDiv{0}", Model.ID)">
+    <div class="row">
+        <div class="col-md-4">
+            <strong>
+                @Html.DisplayFor(model => model.type.name)
+            </strong>
+        </div>
+        <div class="col-md-6">
+            @Html.DisplayFor(model => model.description)
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-sm" onclick="LoadEditForm('Analyses', @Model.ID)">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="Delete('Analyses', @Model.ID)">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+        <div class="col-md-4">
+
+        </div>
+        @if (Model.comments!=null)
+        { 
+        <div class="col-md-6  alert alert-info">
+            <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @Html.DisplayNameFor(model => model.comments):</h4>
+            <p>@Html.DisplayFor(model => model.comments)</p>
+        </div>
+        }
+    </div>
+</div>
+<hr />

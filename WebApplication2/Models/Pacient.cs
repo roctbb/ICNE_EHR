@@ -22,6 +22,12 @@ namespace WebApplication2.Models
         [DisplayName("Тип дебюта")]
         public String name { get; set; }
     }
+    public class AnalysisType
+    {
+        public int ID { get; set; }
+        [DisplayName("Вид анализа")]
+        public String name { get; set; }
+    }
     public class DiagnosisType
     {
         public int ID { get; set; }
@@ -115,6 +121,7 @@ namespace WebApplication2.Models
         public List<Neurostatus> neurostatuses { get; set; }
         public List<Review> reviews { get; set; }
         public List<Syndrome> syndromes { get; set; }
+        public List<Analysis> analysis { get; set; }
     }
     public class Anamnesis
     {
@@ -213,6 +220,20 @@ namespace WebApplication2.Models
         [DisplayName("Невростатус")]
        
         public NeuroStatusType type { get; set; }
+        [DisplayName("Описание")]
+        [DataType(DataType.MultilineText)]
+        public String description { get; set; }
+        [DisplayName("Комментарий")]
+        [DataType(DataType.MultilineText)]
+        public String comments { get; set; }
+
+    }
+    public class Analysis
+    {
+        public int ID { get; set; }
+        [DisplayName("Анализ")]
+
+        public AnalysisType type { get; set; }
         [DisplayName("Описание")]
         [DataType(DataType.MultilineText)]
         public String description { get; set; }
@@ -325,6 +346,7 @@ namespace WebApplication2.Models
 
         public Pacient()
         {
+            sex = Sex.M;
         }    
     }
     public class PacientDBContext : DbContext
@@ -344,6 +366,8 @@ namespace WebApplication2.Models
         public DbSet<NeuroStatusType> neuroStatusTypes { get; set; }
         public DbSet<Assigment> assigments { get; set; }
         public DbSet<AssigmentType> assigmentTypes { get; set; }
+        public DbSet<Analysis> analysis { get; set; }
+        public DbSet<AnalysisType> analysisTypes { get; set; }
         public DbSet<Syndrome> syndromes { get; set; }
         public DbSet<SyndromeType> syndromeTypes { get; set; }
         public DbSet<Review> reviews { get; set; }

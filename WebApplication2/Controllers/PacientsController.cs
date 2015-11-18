@@ -34,6 +34,7 @@ namespace WebApplication2.Controllers
         // GET: Pacients/Details/5
         public ActionResult Details(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,9 +50,15 @@ namespace WebApplication2.Controllers
                  .Include(p => p.visits.Select(w => w.neurostatuses.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.assigments.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.syndromes.Select(r => r.type)))
+                 .Include(p => p.visits.Select(w => w.analysis.Select(r => r.type)))
                  .Include(p => p.visits.Select(w => w.reviews))
                  .Where(p=>p.ID == id).Single();
             pacient.visits.Sort(delegate (VisitDate t1, VisitDate t2) { return t2.date.CompareTo(t1.date); });
+            if (pacient.cart == null)
+            {
+                pacient.cart = pacient.ID.ToString();
+                db.SaveChanges();
+            }
             return View(pacient);
         }
 
@@ -76,6 +83,7 @@ namespace WebApplication2.Controllers
             if (d==null)
                 return RedirectToAction("Index", "Pacients");
             data.pacient.doctor = d;
+            
             if (ModelState.IsValid)
             {
                 db.pacients.Add(data.pacient);

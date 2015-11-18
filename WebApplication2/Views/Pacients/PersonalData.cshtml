@@ -35,13 +35,20 @@
         <dd>
             @Html.DisplayFor(model => model.sex)
         </dd>
+        @{ 
+            var today = DateTime.Today;
 
+            var a = (today.Year * 100 + today.Month) * 100 + today.Day;
+            var b = (Model.birthday.Year * 100 + Model.birthday.Month) * 100 + Model.birthday.Day;
+
+            var age = (a - b) / 10000;
+        }
         <dt>
             @Html.DisplayNameFor(model => model.birthday)
         </dt>
 
         <dd>
-            @Model.birthday.Day.@Model.birthday.Month.@Model.birthday.Year
+            @Model.birthday.Day.@Model.birthday.Month.@Model.birthday.Year&nbsp;(@age лет)
             
         </dd>
 

@@ -112,6 +112,7 @@
         <li role="presentation"><a href="#DiagnosesTab" aria-controls="DiagnosesTab" role="tab" data-toggle="tab">Диагнозы</a></li>
         <li role="presentation"><a href="#SyndromesTab" aria-controls="SyndromesTab" role="tab" data-toggle="tab">Приступы</a></li>
         <li role="presentation"><a href="#ResearchesTab" aria-controls="ResearchesTab" role="tab" data-toggle="tab">Исследования</a></li>
+        <li role="presentation"><a href="#AnalysesTab" aria-controls="AnalysesTab" role="tab" data-toggle="tab">Анализы</a></li>
         <li role="presentation"><a href="#AssigmentsTab" aria-controls="AssigmentsTab" role="tab" data-toggle="tab">Назначения</a></li>
         <li role="presentation"><a href="#NeurostatusTab" aria-controls="NeurostatusTab" role="tab" data-toggle="tab">Невростатус</a></li>
         <li role="presentation"><a href="#ReviewsTab" aria-controls="ReviewsTab" role="tab" data-toggle="tab">Резюме</a></li>
@@ -159,6 +160,9 @@
         </div>
         <div role="tabpanel" class="tab-pane fade" id="ResearchesTab">
             @Html.Partial("~/Views/Pacients/researchList.cshtml", Model)
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="AnalysesTab">
+            @Html.Partial("~/Views/Pacients/analysisList.cshtml", Model)
         </div>
         <div role="tabpanel" class="tab-pane fade" id="AssigmentsTab">
             @Html.Partial("~/Views/Pacients/assigmentList.cshtml", Model)

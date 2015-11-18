@@ -1,0 +1,29 @@
+﻿
+@model WebApplication2.Models.Pacient
+@using WebApplication2.Models
+<div class="bs-callout bs-callout-primary">
+    <h5>Новый анализ</h5>
+    <p>&nbsp;</p>
+    @Html.Action("pacientCreateByDate", "Analyses", new { id = Model.ID })
+    <div class="tabContent">
+    </div>
+</div>
+@foreach (var visit in Model.visits)
+{
+    
+    if (visit.analysis.Count!=0) { 
+<div class="bs-callout bs-callout-success">
+    <h5>Анализы от @visit.date.Date</h5>
+    <p>&nbsp;</p>
+    
+    <div class="tabContent">
+       
+            @foreach (var anamnes in visit.analysis)
+            {
+                @Html.Partial("~/Views/Analyses/pacientDetails.cshtml", anamnes)
+            }
+        
+        </div>
+</div>
+    }
+}

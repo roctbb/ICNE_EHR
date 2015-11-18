@@ -19,11 +19,6 @@
                             return false;
                         }
 
-                        if (b.getContentWindow().document.getElementById('content').files[0].size > 1000 * 1024) {
-                            alert('Max image file size is 1MB');
-                            return false;
-                        }
-
                         if (b.getContentWindow().document.getElementById('content').files[0].type != "image/jpeg" && b.getContentWindow().document.getElementById('content').files[0].type != "image/jpg" &&
                             b.getContentWindow().document.getElementById('content').files[0].type != "image/png" && b.getContentWindow().document.getElementById('content').files[0].type != "image/gif") {
                             alert('Only image file format can be uploaded');
@@ -45,7 +40,7 @@
                         }).done(function (msg) {
                             var imageAlt = b.getContentWindow().document.getElementById('desc').value;
                             var imageSrc = "data:" + b.getContentWindow().document.getElementById('content').files[0].type + ";base64," + msg;
-
+                            alert("fff");
                             var imageTag = '<img src="' + imageSrc + '" alt="' + imageAlt + '" style="max-width: 100%;" />';
 
                             a.insertContent(imageTag), b.close()

@@ -40,6 +40,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -107,12 +115,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -160,6 +162,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnalysesController.cs" />
+    <Compile Include="Controllers\AnalysisTypesController.cs" />
     <Compile Include="Controllers\AnamnesisController.cs" />
     <Compile Include="Controllers\AnamnesisEventTypesController.cs" />
     <Compile Include="Controllers\AssigmentsController.cs" />
@@ -548,6 +552,17 @@
     <Content Include="Views\Reviews\pacientCreateByDate.cshtml" />
     <Content Include="Views\Shared\tinymce_full.cshtml" />
     <Content Include="Views\Syndromes\pacientCreateByDate.cshtml" />
+    <Content Include="Views\AnalysisTypes\Create.cshtml" />
+    <Content Include="Views\AnalysisTypes\Delete.cshtml" />
+    <Content Include="Views\AnalysisTypes\Details.cshtml" />
+    <Content Include="Views\AnalysisTypes\Edit.cshtml" />
+    <Content Include="Views\AnalysisTypes\Index.cshtml" />
+    <Content Include="Views\Analyses\pacientCreate.cshtml" />
+    <Content Include="Views\Analyses\pacientCreateByDate.cshtml" />
+    <Content Include="Views\Analyses\pacientDelete.cshtml" />
+    <Content Include="Views\Analyses\pacientDetails.cshtml" />
+    <Content Include="Views\Analyses\pacientEdit.cshtml" />
+    <Content Include="Views\Pacients\analysisList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

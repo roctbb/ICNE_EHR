@@ -1,0 +1,38 @@
+﻿@model WebApplication2.Models.Analysis
+
+<form id="@String.Format("AnalysesEdit{0}", Model.ID)">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.type.ID)
+    <div class="row">
+        <div class="col-md-4">
+            <strong>
+                @Html.DisplayFor(model => model.type.name)
+            </strong>
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-warning" onclick="CancelEdit('Analyses', @Model.ID);">
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+            </a>
+            <a class="btn btn-sm btn-primary" onclick="PostEditForm('Analyses', @Model.ID);">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-6  alert alert-info">
+            <h4><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @Html.DisplayNameFor(model => model.comments):</h4>
+            @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</form>

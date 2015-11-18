@@ -21,35 +21,27 @@
 
             // General options
             mode : "specific_textareas",
-            editor_selector : "mceEditor",
+            editor_selector: "mceEditor",
+            setup: function (ed) {
+                ed.on('init', function () {
+                    this.getDoc().body.style.fontSize = '12pt';
+                    this.getDoc().body.style.fontFamily = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+                });
+            },
             height: 300,
 		    plugins: [
                 "advlist autolink autosave base64_image link image lists charmap print preview hr anchor pagebreak spellchecker",
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+                "table contextmenu directionality emoticons template textcolor fullpage textcolor colorpicker textpattern"
 		    ],
-
+            toolbar1: "base64_image",
 		    toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
-		    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+		    toolbar2: " | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
 		    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft base64_image",
 
 		    menubar: false,
 		    toolbar_items_size: 'small',
 
-		    style_formats: [
-                    { title: 'Bold text', inline: 'b' },
-                    { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
-                    { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
-                    { title: 'Example 1', inline: 'span', classes: 'example1' },
-                    { title: 'Example 2', inline: 'span', classes: 'example2' },
-                    { title: 'Table styles' },
-                    { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
-		    ],
-
-		    templates: [
-                    { title: 'Test template 1', content: 'Test 1' },
-                    { title: 'Test template 2', content: 'Test 2' }
-		    ]
 
 	    });
 
@@ -88,6 +80,7 @@
                             <li class="">@Html.ActionLink("Типы невростатусов", "Index", "NeuroStatusTypes")</li>
                             <li class="">@Html.ActionLink("Виды исследований", "Index", "ResearchTypes")</li>
                             <li class="">@Html.ActionLink("Виды приступов", "Index", "SyndromeTypes")</li>
+                            <li class="">@Html.ActionLink("Виды анализов", "Index", "AnalysisTypes")</li>
                         </ul>
                     </li>
                 </ul>
