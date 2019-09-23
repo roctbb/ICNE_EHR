@@ -50,14 +50,22 @@
     function PostEditForm(controller, id, mce) {
         if (mce == true) {
             tinyMCE.triggerSave();
-            tinyMCE.EditorManager.execCommand('mceRemoveEditor', true, controller + 'Text' + id);
         }
         $.ajax({
             type: "POST",
             url: '/' + controller + '/pacientEdit/' + id,
             data: $('.' + controller + 'Edit' + id).serialize() + $('#' + controller + 'Edit' + id).serialize(), // serializes the form's elements.
-            success: function (data) {
-                res = $.parseHTML('<div>' + data + '</div>');
+            success: function (data, status, xhr) {
+            	if (xhr.getResponseHeader("X-Responded-JSON") != null 
+			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
+			          alert("Ошибка авторизации")
+			          return;
+			    }
+			    if (mce == true)
+			    {
+			    	tinyMCE.EditorManager.execCommand('mceRemoveEditor', true, controller + 'Text' + id);
+			    }
+                res = $.parseHTML('<div><div>' + data + '</div></div>');
                 if ($(res).find('.' + controller + 'Div' + id).html() != "")
                 {
                     var content = $(res).find('.' + controller + 'Div' + id).html();
@@ -71,13 +79,90 @@
         });
 
     }
+    function PostFileForm(controller, id) {
+        var formData = new FormData($('.' + controller + 'Edit' + id)[0]);
+        console.log(1234);
+        $.ajax({
+            type: "POST",
+            xhr: function () {  // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // Check if upload property exists
+                    myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+                }
+                return myXhr;
+            },
+            url: '/' + controller + '/pacientEdit/' + id,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+            	if (xhr.getResponseHeader("X-Responded-JSON") != null 
+			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
+			          alert("Ошибка авторизации")
+			          return;
+			    }
+                res = $.parseHTML('<div>' + data + '</div>');
+                if ($(res).find('.' + controller + 'Div' + id).html() != "") {
+                    var content = $(res).find('.' + controller + 'Div' + id).html();
+                }
+                else {
+                    var content = $(res).find('#' + controller + 'Div' + id).html();
+                }
+                $('#' + controller + 'Div' + id).html(content);
+                $('.' + controller + 'Div' + id).html(content);
+            }
+        });
+
+    }
+    function PostFileDateForm(controller, id) {
+        var formData = new FormData($('#' + controller + 'DateCreate')[0]);
+        
+        $.ajax({
+            type: "POST",
+            xhr: function () {  // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // Check if upload property exists
+                    //myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+                }
+                return myXhr;
+            },
+            url: '/' + controller + '/CreateByDate/' + id,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+            	if (xhr.getResponseHeader("X-Responded-JSON") != null 
+			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
+			          alert("Ошибка авторизации")
+			          return;
+			    }
+                res = $.parseHTML('<div><div>' + data + '</div></div>');
+                $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
+                $('#' + controller + 'DateCreate').trigger('reset');
+            }
+        }, 'json');
+
+    }
     function PostDateCreateForm(controller, id, mce) {
-        if (mce == true) tinyMCE.triggerSave();
+    	console.log(controller);
+    	console.log(id);
+    	console.log(mce);
+
+        if (mce == true) tinymce.triggerSave(); 
+
+        console.log($('#' + controller + 'DateCreate').serialize())
         $.ajax({
             type: "POST",
             url: '/' + controller + '/CreateByDate/',
             data: $('#' + controller + 'DateCreate').serialize(), // serializes the form's elements.
-            success: function (data) {
+            success: function (data, status, xhr) {
+			    if (xhr.getResponseHeader("X-Responded-JSON") != null 
+			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
+			          alert("Ошибка авторизации")
+			          return;
+			    }
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
                 $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
                 $('#' + controller + 'DateCreate').trigger('reset');
@@ -91,7 +176,12 @@
             type: "POST",
             url: '/' + controller + '/Create/',
             data: $('#' + controller + 'Create').serialize(), // serializes the form's elements.
-            success: function (data) {
+            success: function (data, status, xhr) {
+            	if (xhr.getResponseHeader("X-Responded-JSON") != null 
+			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
+			          alert("Ошибка авторизации")
+			          return;
+			    }
                 res = $.parseHTML('<div><div>' + data + '</div></div>');
                 $('#documentData' + num).prepend($(res).find('div').first().html());
                 $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
@@ -116,6 +206,7 @@
         <li role="presentation"><a href="#AssigmentsTab" aria-controls="AssigmentsTab" role="tab" data-toggle="tab">Назначения</a></li>
         <li role="presentation"><a href="#NeurostatusTab" aria-controls="NeurostatusTab" role="tab" data-toggle="tab">Невростатус</a></li>
         <li role="presentation"><a href="#ReviewsTab" aria-controls="ReviewsTab" role="tab" data-toggle="tab">Резюме</a></li>
+        <li role="presentation"><a href="#FilesTab" aria-controls="FilesTab" role="tab" data-toggle="tab">Файлы</a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active fade in" id="dateTab">
@@ -172,6 +263,9 @@
         </div>
         <div role="tabpanel" class="tab-pane fade" id="ReviewsTab">
             @Html.Partial("~/Views/Pacients/reviewList.cshtml", Model)
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="FilesTab">
+            @Html.Partial("~/Views/Pacients/filesList.cshtml", Model)
         </div>
         
     </div>

@@ -1,0 +1,21 @@
+﻿
+@model WebApplication2.Models.Pacient
+@using WebApplication2.Models
+
+
+<div class="bs-callout bs-callout-success">
+    <h5>Файлы</h5>
+    <p>&nbsp;</p>
+    
+    <div class="tabContent">
+
+        @foreach (var visit in Model.visits)
+        {
+            visit.files.Sort(delegate (WebApplication2.Models.Files t1, WebApplication2.Models.Files t2) { return t2.ID.CompareTo(t1.ID); });
+            foreach (var anamnes in visit.files)
+            {
+                @Html.Partial("~/Views/Files/pacientDetails.cshtml", anamnes)
+            }
+        }
+        </div>
+    </div>

@@ -18,6 +18,7 @@ namespace WebApplication2.Controllers
         // GET: Pacients
         public ActionResult Index()
         {
+            ViewBag.count = db.pacients.Count();
             return View();
         }
         public ActionResult SearchByName(String name = "", String mode = "name")

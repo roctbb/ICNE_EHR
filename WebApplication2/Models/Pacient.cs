@@ -122,7 +122,8 @@ namespace WebApplication2.Models
         public List<Review> reviews { get; set; }
         public List<Syndrome> syndromes { get; set; }
         public List<Analysis> analysis { get; set; }
-        public List<Files> files { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual List<Files> files { get; set; }
     }
     public class Anamnesis
     {
@@ -363,6 +364,8 @@ namespace WebApplication2.Models
         public byte[] Content { get; set; }
 
         public int? VisitDate_ID { get; set; }
+
+        public virtual VisitDate VisitDate { get; set; }
     }
     public class PacientDBContext : DbContext
     {
@@ -388,10 +391,14 @@ namespace WebApplication2.Models
         public DbSet<Review> reviews { get; set; }
         public DbSet<VisitDate> visits { get; set; }
         public DbSet<Doctor> doctors { get; set; }
-        public DbSet<Files> files { get; set; }
+        public DbSet<Files> Files { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<VisitDate>()
+                .HasMany(e => e.files)
+                .WithOptional(e => e.VisitDate)
+                .HasForeignKey(e => e.VisitDate_ID);
         }
 
     }

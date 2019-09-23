@@ -1,0 +1,17 @@
+﻿
+@model WebApplication2.Models.Files
+
+  <div class="@String.Format("FilesDiv{0}", Model.ID)">
+    <div class="row">
+        <div class="col-md-10">
+            @Html.ActionLink(Model.FileName, "Index", "Files", new { id = Model.ID }, new { })
+
+            </div>
+        <div class="col-md-2">
+            <button class="btn btn-danger btn-sm" onclick="Delete('Files', @Model.ID)">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<hr />

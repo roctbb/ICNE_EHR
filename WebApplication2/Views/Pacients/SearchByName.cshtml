@@ -16,7 +16,7 @@
             <tr>
 
                 <td>
-                    @Html.ActionLink(item.name, "Details", new { id = item.ID })
+                    @Html.ActionLink(" "+item.name, "Details", new { id = item.ID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.cart)
