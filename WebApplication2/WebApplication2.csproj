@@ -173,6 +173,7 @@
     <Compile Include="Controllers\AssigmentTypesController.cs" />
     <Compile Include="Controllers\DebutsController.cs" />
     <Compile Include="Controllers\DebutTypesController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\DiagnosesController.cs" />
     <Compile Include="Controllers\DiagnosisTypesController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pacient.cs" />
     <Compile Include="Models\ViewModels.cs" />
-    <Compile Include="Models\VisitDates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
