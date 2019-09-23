@@ -26,6 +26,9 @@
                 <label class="radio-inline">
                     <input type="radio" name="searchOptions" id="reviewSearch" value="review"> По резюме
                 </label>
+                <label class="radio-inline">
+                    <input type="radio" name="searchOptions" id="diagnosisSearch" value="diagnosis"> По диагнозу
+                </label>
             </div>
 
             </div>
@@ -44,6 +47,9 @@
                 {
                     mode = "review"
                 }
+                if ($("#diagnosisSearch").prop("checked")) {
+                    mode = "diagnosis"
+                }
                 name = name.replace(new RegExp(" ", 'g'), "%20");
                 $('#results').load("/Pacients/SearchByName?name=" + name + "&mode="+mode);
             });
@@ -56,6 +62,9 @@
                 var mode = "name";
                 if ($("#reviewSearch").prop("checked")) {
                     mode = "review"
+                }
+                if ($("#diagnosisSearch").prop("checked")) {
+                    mode = "diagnosis"
                 }
                 name = name.replace(new RegExp(" ", 'g'), "%20");
                 $('#results').load("/Pacients/SearchByName?name=" + name + "&mode=" + mode);

@@ -122,6 +122,7 @@ namespace WebApplication2.Models
         public List<Review> reviews { get; set; }
         public List<Syndrome> syndromes { get; set; }
         public List<Analysis> analysis { get; set; }
+        public List<Files> files { get; set; }
     }
     public class Anamnesis
     {
@@ -349,6 +350,20 @@ namespace WebApplication2.Models
             sex = Sex.M;
         }    
     }
+    public partial class Files
+    {
+        public int ID { get; set; }
+
+        [StringLength(255)]
+        public string FileName { get; set; }
+
+        [StringLength(100)]
+        public string ContentType { get; set; }
+
+        public byte[] Content { get; set; }
+
+        public int? VisitDate_ID { get; set; }
+    }
     public class PacientDBContext : DbContext
     {
         public DbSet<Pacient> pacients { get; set; }
@@ -373,6 +388,11 @@ namespace WebApplication2.Models
         public DbSet<Review> reviews { get; set; }
         public DbSet<VisitDate> visits { get; set; }
         public DbSet<Doctor> doctors { get; set; }
+        public DbSet<Files> files { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+        }
 
     }
 }

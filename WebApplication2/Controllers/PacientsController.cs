@@ -24,7 +24,12 @@ namespace WebApplication2.Controllers
         {
             
             if (mode.Equals("name"))
-                return PartialView(db.pacients.Where(p => p.name.Contains(name)).ToList());
+                return PartialView(db.pacients.Where(p => p.name.ToLower().Contains(name.ToLower())).ToList());
+            else if (mode.Equals("diagnosis"))
+            {
+                var results = db.pacients.Where(p => p.visits.Any(vd => vd.diagnoses.Any(r => r.type.name.ToLower().Contains(name.ToLower()))));
+                return PartialView(results.ToList());
+            }
             else
             {
                 var results = db.pacients.Where(p => p.visits.Any(vd => vd.reviews.Any(r => r.comments.ToLower().Contains(name.ToLower()))));
