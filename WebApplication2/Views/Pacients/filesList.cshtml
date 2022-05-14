@@ -2,6 +2,13 @@
 @model WebApplication2.Models.Pacient
 @using WebApplication2.Models
 
+<div class="bs-callout bs-callout-primary">
+    <h5>Новый файл</h5>
+    <p>&nbsp;</p>
+    @Html.Action("pacientCreateByDate", "Files", new { id = Model.ID })
+    <div class="tabContent">
+    </div>
+</div>
 
 <div class="bs-callout bs-callout-success">
     <h5>Файлы</h5>

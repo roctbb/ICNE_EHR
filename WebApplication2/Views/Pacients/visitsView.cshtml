@@ -115,36 +115,7 @@
         });
 
     }
-    function PostFileDateForm(controller, id) {
-        var formData = new FormData($('#' + controller + 'DateCreate')[0]);
-        
-        $.ajax({
-            type: "POST",
-            xhr: function () {  // Custom XMLHttpRequest
-                var myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) { // Check if upload property exists
-                    //myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
-                }
-                return myXhr;
-            },
-            url: '/' + controller + '/CreateByDate/' + id,
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data, status, xhr) {
-            	if (xhr.getResponseHeader("X-Responded-JSON") != null 
-			          && JSON.parse(xhr.getResponseHeader("X-Responded-JSON")).status == "401") {
-			          alert("Ошибка авторизации")
-			          return;
-			    }
-                res = $.parseHTML('<div><div>' + data + '</div></div>');
-                $('#' + controller + 'Tab').find('.tabContent').first().prepend($(res).find('div').first().html());
-                $('#' + controller + 'DateCreate').trigger('reset');
-            }
-        }, 'json');
-
-    }
+    
     function PostDateCreateForm(controller, id, mce) {
     	console.log(controller);
     	console.log(id);

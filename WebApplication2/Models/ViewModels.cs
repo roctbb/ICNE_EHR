@@ -173,4 +173,23 @@ namespace WebApplication2.Models
 
     }
 
+    public class newFile
+    {
+       
+        [Required]
+        [Display(Name = "Upload File")]
+        public HttpPostedFileBase FileAttach { get; set; }
+        public int visitID { get; set; }
+        public int pacientID { get; set; }
+        public int? num { get; set; }
+        public DateTime initialDate { get; set; }
+
+        public newFile()
+        {
+            initialDate = DateTime.Today;
+        }
+    }
+
+
+
 }

@@ -1,10 +1,9 @@
-﻿@model WebApplication2.Models.MyViewModel
+﻿@model WebApplication2.Models.newFile
 @using WebApplication2.Models
 @using (Html.BeginForm("Create", "Files", FormMethod.Post, new { enctype = "multipart/form-data", id = "FilesCreate" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.visitID)
-    @Html.HiddenFor(model => model.num)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="row">
 
